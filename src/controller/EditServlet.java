@@ -19,7 +19,10 @@ import javax.servlet.http.Part;
 
 import org.apache.commons.lang.StringUtils;
 
+import beans.AllUser;
 import beans.User;
+import beans.UserEdit;
+import beans.UserUpdate;
 import exception.NoRowsUpdatedRuntimeException;
 import service.UserService;
 import utils.StreamUtil;
@@ -30,85 +33,94 @@ public class EditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-//		HttpSession session = request.getSession();
-//		User loginUser = (User) session.getAttribute("loginUser");
-//
-//		if (session.getAttribute("editUser") == null) {
-//			User editUser = new UserService().getUser(loginUser.getId());
-//			session.setAttribute("editUser", editUser);
-//		}
+
+
+		UserEdit ue = new UserEdit();
+
+		if(!request.getParameter("id").isEmpty()){
+			ue.setId(Integer.parseInt(request.getParameter("id")));
+		}
+
+
+		List<UserEdit> useredit = new UserService().userEdit(ue);
+
+		request.setAttribute("useredit", useredit);
 
 		request.getRequestDispatcher("edit.jsp").forward(request, response);
 	}
 
-//	@Override
-//	protected void doPost(HttpServletRequest request,
-//			HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+//		String passA = request.getParameter("pass1");
+//		String passB = request.getParameter("pass2");
+//		String name = request.getParameter("name");
+//		String store = request.getParameter("store");
+//		String dept = request.getParameter("dept");
 //
-//		List<String> messages = new ArrayList<String>();
-//
-//		HttpSession session = request.getSession();
-//
-//		User editUser = getEditUser(request);
-//		session.setAttribute("editUser", editUser);
-//
-//		if (isValid(request, messages) == true) {
-//
-//			try {
-//				new UserService().update(editUser);
-//			} catch (NoRowsUpdatedRuntimeException e) {
-//				session.removeAttribute("editUser");
-//				messages.add("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
-//				session.setAttribute("errorMessages", messages);
-//				response.sendRedirect("settings");
-//			}
-//
-//			session.setAttribute("loginUser", editUser);
-//			session.removeAttribute("editUser");
-//
-//			response.sendRedirect("./");
-//		} else {
-//			session.setAttribute("errorMessages", messages);
-//			response.sendRedirect("settings");
-//		}
-//	}
-//
-//	private User getEditUser(HttpServletRequest request)
-//			throws IOException, ServletException {
-//
-//		HttpSession session = request.getSession();
-//		User editUser = (User) session.getAttribute("editUser");
-//
-//		editUser.setName(request.getParameter("name"));
-//		editUser.setAccount(request.getParameter("account"));
-//		editUser.setPassword(request.getParameter("password"));
-//		editUser.setEmail(request.getParameter("email"));
-//		editUser.setDescription(request.getParameter("description"));
-//		return editUser;
-//	}
-//
-//
-//
-//	private boolean isValid(HttpServletRequest request, List<String> messages) {
-//
-//		String account = request.getParameter("account");
-//		String password = request.getParameter("password");
-//
-//		if (StringUtils.isEmpty(account) == true) {
-//			messages.add("アカウント名を入力してください");
-//		}
-//		if (StringUtils.isEmpty(password) == true) {
-//			messages.add("パスワードを入力してください");
-//		}
-//		// TODO アカウントが既に利用されていないか、メールアドレスが既に登録されていないかなどの確認も必要
-//		if (messages.size() == 0) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-//	}
+
+//		System.out.println(passA);
+//		System.out.println(passB);
+//		System.out.println(name);
+//		System.out.println(store);
+//		System.out.println(dept);
+
+		List<String> messages = new ArrayList<String>();
+
+		HttpSession session = request.getSession();
+		if (isValid(request, messages) == true) {
+
+			UserUpdate up = new UserUpdate();
+			up.setId(Integer.parseInt(request.getParameter("id")));
+			up.setLoginid(request.getParameter("loginid"));
+			up.setPass(request.getParameter("pass1"));
+			up.setName(request.getParameter("name"));
+			up.setStore(Integer.parseInt(request.getParameter("store")));
+			up.setDept(Integer.parseInt(request.getParameter("dept")));
+
+			new UserService().userUpdate(up);
+
+			response.sendRedirect("userManage");
+		} else {
+			session.setAttribute("errorMessages", messages);
+			request.getRequestDispatcher("edit.jsp").forward(request, response);
+		}
+	}
+
+	private boolean isValid(HttpServletRequest request, List<String> messages) {
+		String id = request.getParameter("loginid");
+		String pass1 = request.getParameter("pass1");
+		String pass2 = request.getParameter("pass2");
+		String name = request.getParameter("name");
+
+		if (StringUtils.isEmpty(id) || id.length() < 6) {
+			messages.add("6文字以上のIDを入力してください");
+		} else if (!id.matches("[0-9a-zA-Z]+")) {
+			messages.add("IDに使用できるのは半角英数字のみです");
+		}
+		if (!pass1.isEmpty()&&!pass2.isEmpty()&&pass1.length() < 6) {
+			messages.add("6文字以上のパスワードを入力してください");
+		} else if (!pass1.equals(pass2)) {
+			messages.add("パスワードが一致しません");
+		}
+		if (StringUtils.isEmpty(name)) {
+			messages.add("名前を入力してください");
+		}
+
+		if (name.length() > 10) {
+			messages.add("名前は10文字以下で入力してください");
+		}
+
+		if (messages.size() == 0) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
 
 }

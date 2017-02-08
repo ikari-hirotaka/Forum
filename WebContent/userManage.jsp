@@ -17,7 +17,6 @@
 function confStop(){
 	if(confirm('ユーザーを停止しますか？')){
 		return true;
-
 	}else{
 		window.alert('キャンセルしました。')
 		return false;
@@ -25,14 +24,13 @@ function confStop(){
 }
 function confStart(){
 	if(confirm('ユーザーを復活させますか？')){
-
 		return true;
-
 	}else{
 		window.alert('キャンセルしました。')
 		return false;
 	}
 }
+
 //-->
 
 </script>
@@ -40,48 +38,59 @@ function confStart(){
 
 <body>
 	<a href="signup">ユーザー新規登録</a><br/>
-	<a href="edit">ユーザー編集</a>
+
 	<div class="users">
-	<table border="1">
-		<tr>
-			<td>ID</td>
-			<td>Name</td>
-			<td>State</td>
-			<td>Switch</td>
-		</tr>
-		<c:forEach items="${users}" var="users">
+		<table border="1">
+			<tr>
+				<td>ID</td>
+				<td>Name</td>
+				<td>State</td>
+				<td>Edit</td>
+			</tr>
+			<c:forEach items="${users}" var="users">
 
-			<form action="userManage" method="post">
-				<div class="users">
-				<div class="loginid-name">
-					<input type="hidden"id="id" name="id" value="${users.id}"/>
-					<input type="hidden"id="state" name="state" value="${users.state}"/>
+				<form id="form" name="form" action="userManage" method="post">
+					<div class="users">
 
-					<tr>
-					<td><span class="loginid"><c:out value="${users.loginid}" /></span></td>
-					<td><span class="name"><c:out value="${users.name}" /></span></td>
-					<td><c:if test="${users.state==0}">
-					<div>通常</div>
-					</c:if>
-					<c:if test="${users.state==1}">
-					<div>停止</div>
-					</c:if></td>
+						<input type="hidden"id="id" name="id" value="${users.id}"/>
+						<input type="hidden"id="state" name="state" value="${users.state}"/>
 
-					<td><c:if test="${users.state==0}">
-						<input type="submit" value="停止" onClick="return confStop()"/>
-						</c:if>
-						<c:if test="${users.state==1}">
-						<input type="submit" value="復活" onClick="return confStart()"/>
-						</c:if></td>
+						<tr>
+							<td>
+								<span class="loginid"><c:out value="${users.loginid}" /></span>
+							</td>
 
-					<td><input type="button" value="編集" onClick="document.location"/></td>
+							<td>
+								<span class="name"><c:out value="${users.name}" /></span>
+							</td>
+							<td>
+								<c:if test="${users.state==0}">
+									<div>通常</div>
+								</c:if>
+								<c:if test="${users.state==1}">
+									<div>停止</div>
+								</c:if>
+							</td>
 
-					</tr>
-				</div>
-				</div>
-			</form>
-		</c:forEach>
-	</table>
+							<td>
+
+								<c:if test="${users.state==0}">
+									<input type="submit" value="停止" onClick="return confStop()"/>
+								</c:if>
+
+								<c:if test="${users.state==1}">
+									<input type="submit" value="復活" onClick="return confStart()"/>
+								</c:if>
+
+								<a href="edit?id=${users.id}">編集</a>
+
+							</td>
+
+						</tr>
+					</div>
+				</form>
+			</c:forEach>
+		</table>
 	</div>
 </body>
 

@@ -11,6 +11,8 @@ import java.util.List;
 import beans.AllUser;
 import beans.UpdateState;
 import beans.User;
+import beans.UserEdit;
+import beans.UserUpdate;
 import dao.AllUserDao;
 import dao.UserDao;
 import utils.CipherUtil;
@@ -66,15 +68,17 @@ public class UserService {
 		}
 	}
 
-	public void updateStateRe(UpdateState us) {
+	public List<UserEdit> userEdit(UserEdit ue) {
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
 			UserDao userDao = new UserDao();
-			userDao.updateStateRe(connection, us);
+			List<UserEdit> useredit=userDao.userEdit(connection, ue);
 
 			commit(connection);
+
+			return useredit;
 		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;
@@ -103,6 +107,33 @@ public class UserService {
 			commit(connection);
 
 			return user;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
+
+	public void userUpdate(UserUpdate up) {
+
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			if(!up.getPass().isEmpty()){
+				String encPassword = CipherUtil.encrypt(up.getPass());
+				up.setPass(encPassword);
+			}
+
+			UserDao userDao = new UserDao();
+			userDao.userUpdate(connection, up);
+
+			commit(connection);
 		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;

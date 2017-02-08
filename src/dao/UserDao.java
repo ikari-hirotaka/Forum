@@ -11,6 +11,8 @@ import java.util.List;
 
 import beans.UpdateState;
 import beans.User;
+import beans.UserEdit;
+import beans.UserUpdate;
 import exception.SQLRuntimeException;
 
 public class UserDao {
@@ -113,7 +115,12 @@ public class UserDao {
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("update users set");
-			sql.append(" state = 1");
+			if(us.getState()==0){
+				sql.append(" state = 1");
+			}else{
+				sql.append(" state = 0");
+			}
+
 			sql.append(" where id= ? ");
 
 			ps = connection.prepareStatement(sql.toString());
@@ -129,20 +136,26 @@ public class UserDao {
 
 	}
 
-	public void updateStateRe(Connection connection,UpdateState us) {
+	public List<UserEdit> userEdit(Connection connection, UserEdit ue) {
 		PreparedStatement ps = null;
 		try {
-			StringBuilder sql = new StringBuilder();
-			sql.append("update users set ");
-			sql.append(" state = 0");
-			sql.append(" where id= ? ");
+			String sql = " select  id,login_id,name,store_id,department_id from users where id=? ";
+			ps = connection.prepareStatement(sql);
 
-			ps = connection.prepareStatement(sql.toString());
-
-			ps.setInt(1, us.getId());
+			ps.setInt(1, ue.getId());
 
 
-			ps.executeUpdate();
+
+			ResultSet rs = ps.executeQuery();
+			List<UserEdit> toEdit = toEdit(rs);
+			if (toEdit.isEmpty() == true) {
+				return null;
+			} else if (2 <= toEdit.size()) {
+				throw new IllegalStateException("2 <= userList.size()");
+			} else {
+				return toEdit;
+			}
+
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {
@@ -151,6 +164,83 @@ public class UserDao {
 
 	}
 
+	private List<UserEdit> toEdit(ResultSet rs) throws SQLException {
+
+		List<UserEdit> ret = new ArrayList<UserEdit>();
+		try {
+			while (rs.next()) {
+				int id=rs.getInt("id");
+				String loginid = rs.getString("login_id");
+				String name = rs.getString("name");
+				int store = rs.getInt("store_id");
+				int dept = rs.getInt("department_id");
+
+
+				UserEdit ue = new UserEdit();
+				ue.setId(id);
+				ue.setLogin_id(loginid);
+				ue.setName(name);
+				ue.setStore(store);
+				ue.setDept(dept);
+
+
+				ret.add(ue);
+			}
+			return ret;
+		} finally {
+			close(rs);
+		}
+	}
+
+
+	public void userUpdate(Connection connection, UserUpdate up) {
+
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql=new StringBuilder();
+
+			sql.append("update users set");
+			sql.append(" login_id = ?");
+			if(!up.getPass().isEmpty()){
+				sql.append(" ,password = ?");
+			}
+			sql.append(" ,name = ?");
+			sql.append(" ,store_id = ?");
+			sql.append(" ,department_id = ?");
+			sql.append(" where id = ?");
+
+
+
+			ps = connection.prepareStatement(sql.toString());
+			System.out.println(sql.toString());
+			System.out.println("1="+up.getLoginid());
+			System.out.println("2="+up.getPass());
+			System.out.println("3="+up.getName());
+			System.out.println("4="+up.getStore());
+			System.out.println("5="+up.getDept());
+			System.out.println("6="+up.getId());
+
+			ps.setString(1, up.getLoginid());
+			if(!up.getPass().isEmpty()){
+				ps.setString(2, up.getPass());
+				ps.setString(3, up.getName());
+				ps.setInt(4, up.getStore());
+				ps.setInt(5, up.getDept());
+				ps.setInt(6, up.getId());
+			}else{
+				ps.setString(2, up.getName());
+				ps.setInt(3, up.getStore());
+				ps.setInt(4, up.getDept());
+				ps.setInt(5, up.getId());
+			}
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
 
 
 }

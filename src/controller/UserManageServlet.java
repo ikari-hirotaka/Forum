@@ -40,13 +40,10 @@ public class UserManageServlet extends HttpServlet {
 		us.setId(id);
 		us.setState(state);
 
-		if(state==0){
+
 			new UserService().updateState(us);
 			response.sendRedirect("userManage");
-		}else{
-			new UserService().updateStateRe(us);
-			response.sendRedirect("userManage");
-		}
+
 
 	}
 
