@@ -9,10 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import beans.UpdateState;
 import beans.User;
-import beans.UserEdit;
-import beans.UserUpdate;
 import exception.SQLRuntimeException;
 
 public class UserDao {
@@ -112,7 +109,7 @@ public class UserDao {
 		}
 	}
 
-	public void updateState(Connection connection,UpdateState us) {
+	public void updateState(Connection connection,User us) {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
@@ -138,7 +135,7 @@ public class UserDao {
 
 	}
 
-	public UserEdit userEdit(Connection connection, int id) {
+	public User userEdit(Connection connection, int id) {
 		PreparedStatement ps = null;
 		try {
 			String sql = " select  id,login_id,name,store_id,department_id from users where id=? ";
@@ -149,7 +146,7 @@ public class UserDao {
 
 
 			ResultSet rs = ps.executeQuery();
-			UserEdit edit = edit(rs);
+			User edit = edit(rs);
 			return edit;
 
 
@@ -161,9 +158,9 @@ public class UserDao {
 
 	}
 
-	private UserEdit edit(ResultSet rs) throws SQLException {
+	private User edit(ResultSet rs) throws SQLException {
 
-		UserEdit ue = new UserEdit();
+		User ue = new User();
 		try {
 			while (rs.next()) {
 				int id=rs.getInt("id");
@@ -190,7 +187,7 @@ public class UserDao {
 	}
 
 
-	public void userUpdate(Connection connection, UserUpdate up) {
+	public void userUpdate(Connection connection, User up) {
 
 		PreparedStatement ps = null;
 		try {
@@ -210,14 +207,14 @@ public class UserDao {
 
 			ps = connection.prepareStatement(sql.toString());
 			System.out.println(sql.toString());
-			System.out.println("1="+up.getLoginid());
+			System.out.println("1="+up.getLogin_id());
 			System.out.println("2="+up.getPass());
 			System.out.println("3="+up.getName());
 			System.out.println("4="+up.getStore());
 			System.out.println("5="+up.getDept());
 			System.out.println("6="+up.getId());
 
-			ps.setString(1, up.getLoginid());
+			ps.setString(1, up.getLogin_id());
 			if(!up.getPass().isEmpty()){
 				ps.setString(2, up.getPass());
 				ps.setString(3, up.getName());

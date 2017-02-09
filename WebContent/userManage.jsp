@@ -57,7 +57,7 @@ function confStart(){
 
 						<tr>
 							<td>
-								<span class="loginid"><c:out value="${users.loginid}" /></span>
+								<span class="loginid"><c:out value="${users.login_id}" /></span>
 							</td>
 
 							<td>

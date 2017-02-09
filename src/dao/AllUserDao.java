@@ -9,19 +9,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import beans.AllUser;
+import beans.User;
 import exception.SQLRuntimeException;
 
 public class AllUserDao {
 
-	public  List<AllUser> getUser(Connection connection) {
+	public  List<User> getUser(Connection connection) {
 
 		PreparedStatement ps = null;
 		try {
 			String sql = "select * from all_user";
 			ps = connection.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-			List<AllUser> ret = toUserList(rs);
+			List<User> ret = toUserList(rs);
 
 			return ret;
 
@@ -33,8 +33,8 @@ public class AllUserDao {
 
 	}
 
-	private  List<AllUser> toUserList(ResultSet rs) throws SQLException {
-		List<AllUser> ret = new ArrayList<AllUser>();
+	private  List<User> toUserList(ResultSet rs) throws SQLException {
+		List<User> ret = new ArrayList<User>();
 		try {
 			while (rs.next()) {
 				int id=rs.getInt("id");
@@ -42,9 +42,9 @@ public class AllUserDao {
 				String name = rs.getString("name");
 				int state = rs.getInt("state");
 
-				AllUser user = new AllUser();
+				User user = new User();
 				user.setId(id);
-				user.setLoginid(login_id);
+				user.setLogin_id(login_id);
 				user.setName(name);
 				user.setState(state);
 

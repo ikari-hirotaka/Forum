@@ -6,11 +6,7 @@ import static utils.DBUtil.*;
 import java.sql.Connection;
 import java.util.List;
 
-import beans.AllUser;
-import beans.UpdateState;
 import beans.User;
-import beans.UserEdit;
-import beans.UserUpdate;
 import dao.AllUserDao;
 import dao.UserDao;
 import utils.CipherUtil;
@@ -45,7 +41,7 @@ public class UserService {
 
 
 
-	public void updateState(UpdateState us) {
+	public void updateState(User us) {
 
 		Connection connection = null;
 		try {
@@ -65,13 +61,13 @@ public class UserService {
 		}
 	}
 
-	public UserEdit userEdit(int id) {
+	public User userEdit(int id) {
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
 			UserDao userDao = new UserDao();
-			UserEdit useredit=userDao.userEdit(connection, id);
+			User useredit=userDao.userEdit(connection, id);
 
 			commit(connection);
 
@@ -91,7 +87,7 @@ public class UserService {
 
 
 
-	public List<AllUser> getUser() {
+	public List<User> getUser() {
 
 		Connection connection = null;
 		try {
@@ -99,7 +95,7 @@ public class UserService {
 
 			AllUserDao alluserDao = new AllUserDao();
 
-			List<AllUser> user = alluserDao.getUser(connection);
+			List<User> user = alluserDao.getUser(connection);
 
 			commit(connection);
 
@@ -116,7 +112,7 @@ public class UserService {
 	}
 
 
-	public void userUpdate(UserUpdate up) {
+	public void userUpdate(User up) {
 
 		Connection connection = null;
 		try {

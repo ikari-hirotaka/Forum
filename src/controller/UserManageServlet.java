@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import beans.AllUser;
-import beans.UpdateState;
+import beans.User;
 import service.UserService;
 
 @WebServlet(urlPatterns = { "/userManage" })
@@ -22,7 +21,7 @@ public class UserManageServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
 
 
-		List<AllUser> users=new UserService().getUser();
+		List<User> users=new UserService().getUser();
 
 		request.setAttribute("users", users);
 
@@ -37,7 +36,7 @@ public class UserManageServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("id"));
 		int state = Integer.parseInt(request.getParameter("state"));
 
-		UpdateState us= new UpdateState();
+		User us= new User();
 		us.setId(id);
 		us.setState(state);
 

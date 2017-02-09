@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 
-import beans.UserEdit;
-import beans.UserUpdate;
+import beans.User;
 import service.UserService;
 
 @WebServlet(urlPatterns = { "/edit" })
@@ -30,7 +29,7 @@ public class EditServlet extends HttpServlet {
 		int id=Integer.parseInt(request.getParameter("id"));
 //		UserEdit ue=new UserEdit();
 
-		UserEdit ue=new UserService().userEdit(id);
+		User ue=new UserService().userEdit(id);
 
 		System.out.println(ue.getId());
 		System.out.println(ue.getLogin_id());
@@ -50,9 +49,9 @@ public class EditServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		if (isValid(request, messages) == true) {
 
-			UserUpdate up = new UserUpdate();
+			User up = new User();
 			up.setId(Integer.parseInt(request.getParameter("id")));
-			up.setLoginid(request.getParameter("loginid"));
+			up.setLogin_id(request.getParameter("loginid"));
 			up.setPass(request.getParameter("pass1"));
 			up.setName(request.getParameter("name"));
 			up.setStore(Integer.parseInt(request.getParameter("store")));

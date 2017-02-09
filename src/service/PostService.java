@@ -6,9 +6,7 @@ import static utils.DBUtil.*;
 import java.sql.Connection;
 
 import beans.NewPost;
-import beans.UpdateState;
 import dao.PostDao;
-import dao.UserDao;
 
 public class PostService {
 
