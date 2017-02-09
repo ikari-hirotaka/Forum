@@ -90,8 +90,10 @@ function confStart(){
 					</div>
 				</form>
 			</c:forEach>
+
 		</table>
 	</div>
+	<a href="home">ホーム</a>
 </body>
 
 </html>

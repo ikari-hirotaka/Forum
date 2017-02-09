@@ -27,6 +27,7 @@ public class UserManageServlet extends HttpServlet {
 		request.setAttribute("users", users);
 
 		request.getRequestDispatcher("userManage.jsp").forward(request, response);
+//		response.sendRedirect("userManage");
 	}
 
 	@Override

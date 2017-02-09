@@ -8,5 +8,21 @@
 </head>
 <body>
 
+	<form action="newPost" method="post">
+
+		件名<br/>
+		<input type="text" id="title" name="title" maxlength="50"/><br/>
+
+		本文<br/>
+		<textarea id="text" name="text" cols="35" rows="10" maxlength="1000"></textarea><br/>
+
+		カテゴリー<br/>
+		<input type="text" id="category" name="category" maxlength="10"/><br/>
+
+		<input type="submit" value="送信"/>
+
+	</form>
+
+
 </body>
 </html>

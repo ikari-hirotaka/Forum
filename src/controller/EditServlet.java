@@ -1,10 +1,7 @@
 package controller;
 
-import static utils.CloseableUtil.*;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,17 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
-
 import org.apache.commons.lang.StringUtils;
 
-import beans.AllUser;
-import beans.User;
 import beans.UserEdit;
 import beans.UserUpdate;
-import exception.NoRowsUpdatedRuntimeException;
 import service.UserService;
-import utils.StreamUtil;
 
 @WebServlet(urlPatterns = { "/edit" })
 @MultipartConfig(maxFileSize = 100000)
@@ -35,39 +26,24 @@ public class EditServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		int id=Integer.parseInt(request.getParameter("id"));
+//		UserEdit ue=new UserEdit();
 
+		UserEdit ue=new UserService().userEdit(id);
 
-
-		UserEdit ue = new UserEdit();
-
-		if(!request.getParameter("id").isEmpty()){
-			ue.setId(Integer.parseInt(request.getParameter("id")));
-		}
-
-
-		List<UserEdit> useredit = new UserService().userEdit(ue);
-
-		request.setAttribute("useredit", useredit);
-
+		System.out.println(ue.getId());
+		System.out.println(ue.getLogin_id());
+		session.setAttribute("id",ue);
 		request.getRequestDispatcher("edit.jsp").forward(request, response);
+
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-//		String passA = request.getParameter("pass1");
-//		String passB = request.getParameter("pass2");
-//		String name = request.getParameter("name");
-//		String store = request.getParameter("store");
-//		String dept = request.getParameter("dept");
-//
 
-//		System.out.println(passA);
-//		System.out.println(passB);
-//		System.out.println(name);
-//		System.out.println(store);
-//		System.out.println(dept);
 
 		List<String> messages = new ArrayList<String>();
 
@@ -83,12 +59,12 @@ public class EditServlet extends HttpServlet {
 			up.setDept(Integer.parseInt(request.getParameter("dept")));
 
 			new UserService().userUpdate(up);
-
 			response.sendRedirect("userManage");
 		} else {
 			session.setAttribute("errorMessages", messages);
 			request.getRequestDispatcher("edit.jsp").forward(request, response);
 		}
+
 	}
 
 	private boolean isValid(HttpServletRequest request, List<String> messages) {

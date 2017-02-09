@@ -3,8 +3,6 @@ package service;
 import static utils.CloseableUtil.*;
 import static utils.DBUtil.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.util.List;
 
@@ -16,7 +14,6 @@ import beans.UserUpdate;
 import dao.AllUserDao;
 import dao.UserDao;
 import utils.CipherUtil;
-import utils.StreamUtil;
 
 public class UserService {
 
@@ -68,13 +65,13 @@ public class UserService {
 		}
 	}
 
-	public List<UserEdit> userEdit(UserEdit ue) {
+	public UserEdit userEdit(int id) {
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
 			UserDao userDao = new UserDao();
-			List<UserEdit> useredit=userDao.userEdit(connection, ue);
+			UserEdit useredit=userDao.userEdit(connection, id);
 
 			commit(connection);
 

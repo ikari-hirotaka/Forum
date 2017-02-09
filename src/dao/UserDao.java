@@ -50,7 +50,8 @@ public class UserDao {
 		List<User> ret = new ArrayList<User>();
 		try {
 			while (rs.next()) {
-				String id = rs.getString("id");
+				int id=rs.getInt("id");
+				String login_id = rs.getString("login_id");
 				String pass = rs.getString("password");
 				String name = rs.getString("name");
 				int store = rs.getInt("store_id");
@@ -59,6 +60,7 @@ public class UserDao {
 
 				User user = new User();
 				user.setId(id);
+				user.setLogin_id(login_id);
 				user.setPass(pass);
 				user.setName(name);
 				user.setStore(store);
@@ -86,7 +88,7 @@ public class UserDao {
 			sql.append(", department_id");
 			sql.append(", insert_date");
 			sql.append(") VALUES (");
-			sql.append("?"); // id
+			sql.append("?"); // login_id
 			sql.append(", ?"); // pass
 			sql.append(", ?"); // name
 			sql.append(", ?"); // store
@@ -96,7 +98,7 @@ public class UserDao {
 
 			ps = connection.prepareStatement(sql.toString());
 
-			ps.setString(1, user.getId());
+			ps.setString(1, user.getLogin_id());
 			ps.setString(2, user.getPass());
 			ps.setString(3, user.getName());
 			ps.setInt(4, user.getStore());
@@ -136,25 +138,20 @@ public class UserDao {
 
 	}
 
-	public List<UserEdit> userEdit(Connection connection, UserEdit ue) {
+	public UserEdit userEdit(Connection connection, int id) {
 		PreparedStatement ps = null;
 		try {
 			String sql = " select  id,login_id,name,store_id,department_id from users where id=? ";
 			ps = connection.prepareStatement(sql);
 
-			ps.setInt(1, ue.getId());
+			ps.setInt(1,id);
 
 
 
 			ResultSet rs = ps.executeQuery();
-			List<UserEdit> toEdit = toEdit(rs);
-			if (toEdit.isEmpty() == true) {
-				return null;
-			} else if (2 <= toEdit.size()) {
-				throw new IllegalStateException("2 <= userList.size()");
-			} else {
-				return toEdit;
-			}
+			UserEdit edit = edit(rs);
+			return edit;
+
 
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
@@ -164,9 +161,9 @@ public class UserDao {
 
 	}
 
-	private List<UserEdit> toEdit(ResultSet rs) throws SQLException {
+	private UserEdit edit(ResultSet rs) throws SQLException {
 
-		List<UserEdit> ret = new ArrayList<UserEdit>();
+		UserEdit ue = new UserEdit();
 		try {
 			while (rs.next()) {
 				int id=rs.getInt("id");
@@ -176,7 +173,7 @@ public class UserDao {
 				int dept = rs.getInt("department_id");
 
 
-				UserEdit ue = new UserEdit();
+
 				ue.setId(id);
 				ue.setLogin_id(loginid);
 				ue.setName(name);
@@ -184,9 +181,9 @@ public class UserDao {
 				ue.setDept(dept);
 
 
-				ret.add(ue);
+
 			}
-			return ret;
+			return ue;
 		} finally {
 			close(rs);
 		}

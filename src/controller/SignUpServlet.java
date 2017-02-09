@@ -37,7 +37,7 @@ public class SignUpServlet extends HttpServlet {
 		if (isValid(request, messages) == true) {
 
 			User user = new User();
-			user.setId(request.getParameter("id"));
+			user.setLogin_id(request.getParameter("id"));
 			user.setPass(request.getParameter("pass"));
 			user.setName(request.getParameter("name"));
 			user.setStore(Integer.parseInt(request.getParameter("store")));
