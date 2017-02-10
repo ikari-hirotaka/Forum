@@ -28,27 +28,42 @@ function outMenu(){
 </script>
 </head>
 <body>
-<div align="right"><a href="logout">ログアウト</a></div>
-<div onMouseOver="menu()" onMouseOut="outMenu()">menu</div>
-<div id="new" style="visibility:hidden" onMouseOver="menu()" onMouseOut="outMenu()"><a href="newPost">新規投稿</a></div>
-<div id="manage" style="visibility:hidden" onMouseOver="menu()" onMouseOut="outMenu()"><a href="userManage">ユーザー管理</a></div>
+こんにちは ${user.name} さん。 <a href="logout">ログアウト</a><br/>
+<span onMouseOver="menu()" onMouseOut="outMenu()">menu</span>
 
-<br/>
-<br/>
+<div id="new" style="visibility:hidden"><a href="newPost" onMouseOver="menu()" onMouseOut="outMenu()">新規投稿</a></div>
+<div id="manage" style="visibility:hidden"><a href="userManage" onMouseOver="menu()" onMouseOut="outMenu()">ユーザー管理</a></div>
+
+
 <c:forEach items="${posts}" var="posts">
-title: <br/>${posts.title}
+${posts.id}
+ <br/>
+
+title:${posts.title}
 <br/>
-text: <br/>${posts.text}
+text: <br/><br/>${posts.text}
+<br/><br/>
+category:${posts.category}
 <br/>
-category: <br/>${posts.category}
+insert_date:${posts.insert_date}
 <br/>
-insert_date: <br/>${posts.insert_date}
+name:${posts.name}
+<c:if test="${comments!=null}"></c:if>
 <br/>
-name: <br/>${posts.name}
+Comment:<br/>
+>> ${posts.id}
+<form action="comment" method="Post">
+<input type="hidden" id="post_id" name="post_id" value="${posts.id}"/>
+<input type="hidden" id="user_id" name="user_id" value="${user.id}"/>
+<textarea id="comment" name="comment" cols="30" rows="10" maxlength="500"></textarea>
+<br/>
+<input type="submit" value="コメント送信"/>
+</form>
 <br/>
 <br/>
 
 </c:forEach>
+
 
 </body>
 </html>

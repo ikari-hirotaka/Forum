@@ -35,6 +35,7 @@ public class HomeServlet extends HttpServlet {
 
 		List<Posts> posts = new PostService().getPosts();
 
+		request.setAttribute("user", user);
 		request.setAttribute("posts", posts);
 		request.setAttribute("isPosts", isPosts);
 

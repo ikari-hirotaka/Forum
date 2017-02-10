@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Posts implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private int id;
 	private String title;
 	private String text;
 	private String category;
@@ -39,6 +40,12 @@ public class Posts implements Serializable {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 
 

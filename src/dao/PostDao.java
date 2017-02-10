@@ -81,6 +81,7 @@ public class PostDao {
 		List<Posts> ret = new ArrayList<Posts>();
 		try {
 			while (rs.next()) {
+				int id= rs.getInt("id");
 				String title=rs.getString("title");
 				String text = rs.getString("text");
 				String category= rs.getString("category");
@@ -89,6 +90,7 @@ public class PostDao {
 
 
 				Posts posts = new Posts();
+				posts.setId(id);
 				posts.setTitle(title);
 				posts.setText(text);
 				posts.setCategory(category);
