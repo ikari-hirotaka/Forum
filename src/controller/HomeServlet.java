@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.Posts;
 import beans.User;
 //import beans.UserMessage;
 //import service.MessageService;
+import service.PostService;
 
 @WebServlet(urlPatterns = { "/home" })
 public class HomeServlet extends HttpServlet {
@@ -23,22 +25,18 @@ public class HomeServlet extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
 		HttpSession session = request.getSession();
 
-//		User user = (User) request.getSession().getAttribute("loginUser");
-//		boolean isShowMessageForm;
-//		if (user != null) {
-//			isShowMessageForm = true;
-//		} else {
-//			isShowMessageForm = false;
-//		}
+		User user = (User) session.getAttribute("loginUser");
+		boolean isPosts;
+		if (user != null) {
+			isPosts = true;
+		} else {
+			isPosts = false;
+		}
 
-//		List<UserMessage> messages = new MessageService().getMessage();
-//
-//		request.setAttribute("messages", messages);
-//		request.setAttribute("isShowMessageForm", isShowMessageForm);
+		List<Posts> posts = new PostService().getPosts();
 
-
-
-
+		request.setAttribute("posts", posts);
+		request.setAttribute("isPosts", isPosts);
 
 		request.getRequestDispatcher("/home.jsp").forward(request, response);
 	}
