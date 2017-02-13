@@ -23,6 +23,15 @@ function outMenu(){
 	document.getElementById("out").style="visibility:hidden";
 }
 
+function narrow(){
+	var element = document.getElementById( "target" ) ;
+	var rect = element.getBoundingClientRect() ;
+	var positionX = rect.left + window.pageXOffset ;	// 要素のX座標
+	var positionY = rect.top + window.pageYOffset ;	// 要素のY座標
+
+	window.scrollTo( positionX, positionY ) ;
+}
+
 -->
 
 </script>
@@ -34,6 +43,18 @@ function outMenu(){
 <div id="new" style="visibility:hidden"><a href="newPost" onMouseOver="menu()" onMouseOut="outMenu()">新規投稿</a></div>
 <div id="manage" style="visibility:hidden"><a href="userManage" onMouseOver="menu()" onMouseOut="outMenu()">ユーザー管理</a></div>
 
+
+<h4 onClick="narrow()">絞込み</h4>
+<c:if test="${ not empty errorMessages }">
+		<div class="errorMessages">
+			<ul>
+				<c:forEach items="${errorMessages}" var="message">
+					<li><c:out value="${message}" />
+				</c:forEach>
+			</ul>
+		</div>
+		<c:remove var="errorMessages" scope="session"/>
+	</c:if>
 
 <c:forEach items="${posts}" var="posts">
 ${posts.id}
@@ -51,6 +72,21 @@ name:${posts.name}
 <c:if test="${comments!=null}"></c:if>
 <br/>
 Comment:<br/>
+<c:forEach items="${com}" var="com">
+<c:if test="${com.post_id==posts.id}">
+>> ${com.post_id}
+<br/>
+ ${com.text}
+ <br/>
+ ${com.user_name}
+<br/>
+${com.insert_date}
+<br/>
+</c:if>
+</c:forEach>
+
+
+
 >> ${posts.id}
 <form action="comment" method="Post">
 <input type="hidden" id="post_id" name="post_id" value="${posts.id}"/>
@@ -64,6 +100,26 @@ Comment:<br/>
 
 </c:forEach>
 
+<h4 id="target">絞込み</h4>
+<br/>
+<form action="home" method="Get">
+カテゴリー:
+<br/>
+<input type="text" id="cate" name="cate"/>
+<br/>
+
+日時:
+<br/>
+<input type="date" id="date1" name="date1"/>
+<br/>
+<input type="date" id="date2" name="date2"/>
+<br/>
+<input type="submit" value="実行"/>
+
+</form>
+<br/>
+<br/>
+<br/>
 
 </body>
 </html>
