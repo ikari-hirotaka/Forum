@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,12 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
+
 import beans.Comment;
 import beans.Posts;
 import beans.User;
 import service.CommentService;
-//import beans.UserMessage;
-//import service.MessageService;
 import service.PostService;
 
 @WebServlet(urlPatterns = { "/home" })
@@ -35,18 +37,34 @@ public class HomeServlet extends HttpServlet {
 			isPosts = false;
 		}
 
-		System.out.println(request.getParameter("cate"));
-		System.out.println(request.getParameter("date1"));
-		System.out.println(request.getParameter("date2"));
+		String category = request.getParameter("cate");
+		String sdate = request.getParameter("date1");
+		String gdate = request.getParameter("date2");
+		Date today = new Date();
+		String date1 = null;
+		String date2 = null;
 
 
-		List<Posts> posts = new PostService().getPosts();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		if(StringUtils.isEmpty(sdate)){
+			date1= sdf.format(new PostService().getMin());
+		}else{
+			date1 = sdate+" 00:00:00";
+		}
+
+		if(StringUtils.isEmpty(gdate)){
+			date2= sdf.format(today).toString();
+		}else{
+			date2 = gdate+" 23:59:59";
+		}
+
+		List<Posts> posts = new PostService().getPosts(category,date1,date2);
 
 		List<Comment> com = new CommentService().getComment();
 
 		session.setAttribute("user", user);
 		session.setAttribute("posts", posts);
-		session.setAttribute("com",com);
+		session.setAttribute("com", com);
 		session.setAttribute("isPosts", isPosts);
 
 		request.getRequestDispatcher("/home.jsp").forward(request, response);

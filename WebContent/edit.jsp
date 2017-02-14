@@ -26,7 +26,7 @@
 
 </c:if>
 
-<form action="edit" method="post"><br />
+<form action="edit" method="post"><br/>
 
 	<input type="hidden" id="id" name="id" value="${id.id}">
 

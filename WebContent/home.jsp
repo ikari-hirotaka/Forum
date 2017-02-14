@@ -26,8 +26,8 @@ function outMenu(){
 function narrow(){
 	var element = document.getElementById( "target" ) ;
 	var rect = element.getBoundingClientRect() ;
-	var positionX = rect.left + window.pageXOffset ;	// 要素のX座標
-	var positionY = rect.top + window.pageYOffset ;	// 要素のY座標
+	var positionX = rect.left + window.pageXOffset ;
+	var positionY = rect.top + window.pageYOffset ;
 
 	window.scrollTo( positionX, positionY ) ;
 }
@@ -44,8 +44,8 @@ function narrow(){
 <div id="manage" style="visibility:hidden"><a href="userManage" onMouseOver="menu()" onMouseOut="outMenu()">ユーザー管理</a></div>
 
 
-<h4 onClick="narrow()">絞込み</h4>
-<c:if test="${ not empty errorMessages }">
+
+	<c:if test="${ not empty errorMessages }">
 		<div class="errorMessages">
 			<ul>
 				<c:forEach items="${errorMessages}" var="message">
@@ -55,7 +55,8 @@ function narrow(){
 		</div>
 		<c:remove var="errorMessages" scope="session"/>
 	</c:if>
-
+<h4 onClick="narrow()">絞込み↓</h4>
+<br/>
 <c:forEach items="${posts}" var="posts">
 ${posts.id}
  <br/>
@@ -105,13 +106,13 @@ ${com.insert_date}
 <form action="home" method="Get">
 カテゴリー:
 <br/>
-<input type="text" id="cate" name="cate"/>
+<input type="text" id="cate" name="cate" maxlength=10/>
 <br/>
 
 日時:
 <br/>
 <input type="date" id="date1" name="date1"/>
-<br/>
+～
 <input type="date" id="date2" name="date2"/>
 <br/>
 <input type="submit" value="実行"/>

@@ -27,14 +27,20 @@ public class EditServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		int id=Integer.parseInt(request.getParameter("id"));
-//		UserEdit ue=new UserEdit();
 
-		User ue=new UserService().userEdit(id);
+		User user = (User) session.getAttribute("user");
+		if(user.getDept()==1){
+			user=new UserService().userEdit(id);
+			session.setAttribute("id",user);
+			request.getRequestDispatcher("edit.jsp").forward(request, response);
+		} else {
 
-		System.out.println(ue.getId());
-		System.out.println(ue.getLogin_id());
-		session.setAttribute("id",ue);
-		request.getRequestDispatcher("edit.jsp").forward(request, response);
+			List<String> messages = new ArrayList<String>();
+			messages.add("アクセス権を持っていません。");
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("home");
+		}
+
 
 	}
 

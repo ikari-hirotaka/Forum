@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
 		User user = loginService.login(loginID, password);
 
 		HttpSession session = request.getSession();
-		if (user != null) {
+		if (user != null&&user.getState()!=1) {
 
 			session.setAttribute("loginUser", user);
 			response.sendRedirect("home");

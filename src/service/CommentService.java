@@ -7,8 +7,6 @@ import java.sql.Connection;
 import java.util.List;
 
 import beans.Comment;
-import beans.User;
-import dao.AllUserDao;
 import dao.CommentDao;
 
 public class CommentService {

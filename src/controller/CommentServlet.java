@@ -14,10 +14,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 
 import beans.Comment;
-import beans.NewPost;
 import beans.User;
 import service.CommentService;
-import service.PostService;
 
 @WebServlet(urlPatterns = { "/comment" })
 public class CommentServlet extends HttpServlet {

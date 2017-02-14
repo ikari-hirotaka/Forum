@@ -15,7 +15,6 @@ import org.apache.commons.lang.StringUtils;
 
 import beans.NewPost;
 import beans.User;
-import service.LoginService;
 import service.PostService;
 
 @WebServlet(urlPatterns = { "/newPost" })

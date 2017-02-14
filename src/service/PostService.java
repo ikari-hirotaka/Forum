@@ -4,6 +4,7 @@ import static utils.CloseableUtil.*;
 import static utils.DBUtil.*;
 
 import java.sql.Connection;
+import java.util.Date;
 import java.util.List;
 
 import beans.NewPost;
@@ -32,13 +33,13 @@ public class PostService {
 		}
 	}
 
-	public List<Posts> getPosts() {
+	public List<Posts> getPosts(String category, String date1, String date2) {
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
 			PostDao pDao = new PostDao();
-			List<Posts> ret = pDao.getPosts(connection);
+			List<Posts> ret = pDao.getPosts(connection,category,date1,date2);
 
 			commit(connection);
 			return ret;
@@ -52,6 +53,26 @@ public class PostService {
 			close(connection);
 		}
 
+	}
+
+	public Date getMin() {
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			PostDao pDao = new PostDao();
+			Date date1 = pDao.getMin(connection);
+
+			commit(connection);
+			return date1;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
 	}
 
 }

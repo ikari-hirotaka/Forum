@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import beans.Comment;
-import beans.User;
 import exception.SQLRuntimeException;
 
 public class CommentDao {

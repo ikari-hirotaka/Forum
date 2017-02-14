@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import beans.User;
 import service.UserService;
@@ -20,12 +22,22 @@ public class UserManageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
 
+		HttpSession session = request.getSession();
 
-		List<User> users=new UserService().getUser();
+		User user = (User) session.getAttribute("user");
+		if(user.getDept()==1){
+			List<User> users=new UserService().getUser();
 
-		request.setAttribute("users", users);
+			request.setAttribute("users", users);
 
-		request.getRequestDispatcher("userManage.jsp").forward(request, response);
+			request.getRequestDispatcher("userManage.jsp").forward(request, response);
+		} else {
+
+			List<String> messages = new ArrayList<String>();
+			messages.add("アクセス権を持っていません。");
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("home");
+		}
 //		response.sendRedirect("userManage");
 	}
 
