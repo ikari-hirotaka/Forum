@@ -48,7 +48,7 @@ public class PostDao {
 		}
 	}
 
-	public List<Posts> getPosts(Connection connection) {
+	public List<Posts> getPosts(Connection connection,String category,String sdate,String gdate) {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
@@ -63,8 +63,37 @@ public class PostDao {
 			sql.append(" users,posts ");
 			sql.append(" where ");
 			sql.append(" users.id=posts.user_id ");
+			if(category!=null){
+				sql.append(" and category = ? ");
+			}
+			sql.append(" and ? ");
+			if(sdate!=null&&gdate!=null){
+				sql.append(" and ? ");
+			}
+
 
 			ps = connection.prepareStatement(sql.toString());
+
+			if(category!=null){
+				ps.setString(1, category);
+			}
+
+			if(sdate==null){
+				if(gdate==null){
+					ps.setString(2, " posts.insert_date < current_timestamp ");
+				}else{
+					ps.setString(2, " posts.insert_date < gdate ");
+				}
+			}else{
+				if(gdate==null){
+					ps.setString(2, " sdate < posts.insert_date ");
+				}else{
+					ps.setString(2, " sdate < posts.insert_date ");
+					ps.setString(3, " posts.insert_date < gdate ");
+				}
+			}
+
+
 			ResultSet rs = ps.executeQuery();
 			List<Posts> ret = posts(rs);
 

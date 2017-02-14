@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -35,12 +36,12 @@ public class HomeServlet extends HttpServlet {
 			isPosts = false;
 		}
 
-		System.out.println(request.getParameter("cate"));
-		System.out.println(request.getParameter("date1"));
-		System.out.println(request.getParameter("date2"));
+		String category=request.getParameter("cate");
+		String sdate=request.getParameter("date1");
+		String gdate=request.getParameter("date2");
 
 
-		List<Posts> posts = new PostService().getPosts();
+		List<Posts> posts = new PostService().getPosts(category,sdate,gdate);
 
 		List<Comment> com = new CommentService().getComment();
 
