@@ -36,21 +36,20 @@ public class HomeServlet extends HttpServlet {
 		} else {
 			isPosts = false;
 		}
-
-		String category = request.getParameter("cate");
+		String category=request.getParameter("category");
 		String sdate = request.getParameter("date1");
 		String gdate = request.getParameter("date2");
 		Date today = new Date();
 		String date1 = null;
 		String date2 = null;
 
-
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		if(StringUtils.isEmpty(sdate)){
+		if(new PostService().getMin()!=null&&StringUtils.isEmpty(sdate)){
 			date1= sdf.format(new PostService().getMin());
 		}else{
 			date1 = sdate+" 00:00:00";
 		}
+
 
 		if(StringUtils.isEmpty(gdate)){
 			date2= sdf.format(today).toString();
@@ -60,12 +59,17 @@ public class HomeServlet extends HttpServlet {
 
 		List<Posts> posts = new PostService().getPosts(category,date1,date2);
 
+		List<Posts> categories = new PostService().getCategories();
+
 		List<Comment> com = new CommentService().getComment();
 
-		session.setAttribute("user", user);
-		session.setAttribute("posts", posts);
-		session.setAttribute("com", com);
-		session.setAttribute("isPosts", isPosts);
+		request.setAttribute("user", user);
+		request.setAttribute("cate", categories);
+		request.setAttribute("posts", posts);
+		request.setAttribute("com", com);
+		request.setAttribute("sdate", sdate);
+		request.setAttribute("gdate", gdate);
+		request.setAttribute("isPosts", isPosts);
 
 		request.getRequestDispatcher("/home.jsp").forward(request, response);
 	}

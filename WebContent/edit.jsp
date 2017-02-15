@@ -28,48 +28,48 @@
 
 <form action="edit" method="post"><br/>
 
-	<input type="hidden" id="id" name="id" value="${id.id}">
+	<input type="hidden" id="id" name="id" value="${userInf.id}">
 
-	<label for="loginid">ID</label>
-	<input name="loginid" id="loginid" maxlength="20" value="${id.login_id}"/>（半角英数6文字以上20文字以下）<br />
+	<label for="loginid">ID</label><br/>
+	<input name="loginid" id="loginid" maxlength="20" value="${userInf.login_id}"/>（半角英数6文字以上20文字以下）<br/><br/>
 
-	<label for="pass1">パスワード(変更する場合のみ)</label>
-	<input name="pass1" type="password" id="pass1" maxlength="255"/>（6文字以上255文字以下）<br />
+	<label for="pass1">パスワード(変更する場合のみ)</label><br/>
+	<input name="pass1" type="password" id="pass1" maxlength="255"/>（6文字以上255文字以下）<br/><br/>
 
-	<label for="pass2">パスワード(再入力)</label>
-	<input name="pass2" type="password" id="pass2" maxlength="255"/>
+	<label for="pass2">パスワード(再入力)</label><br/>
+	<input name="pass2" type="password" id="pass2" maxlength="255"/> <br/><br/>
 
-	<label for="name">名前</label>
-	<input name="name"  id="name" maxlength="10" value="${id.name}"/>（10文字以内）<br />
+	<label for="name">名前</label><br/>
+	<input name="name"  id="name" maxlength="10" value="${userInf.name}"/>（10文字以内）<br/><br/>
 
-	<label for="store">店舗</label>
+	<label for="store">店舗</label><br/>
 	<select name="store" id="store">
-		<option value="1"<c:if test="${id.store==1}">selected</c:if>>本社</option>
-		<option value="2"<c:if test="${id.store==2}">selected</c:if>>支店A</option>
-		<option value="3"<c:if test="${id.store==3}">selected</c:if>>支店B</option>
-		<option value="4"<c:if test="${id.store==4}">selected</c:if>>支店C</option>
+		<option value="1"<c:if test="${userInf.store==1}">selected</c:if>>本社</option>
+		<option value="2"<c:if test="${userInf.store==2}">selected</c:if>>支店A</option>
+		<option value="3"<c:if test="${userInf.store==3}">selected</c:if>>支店B</option>
+		<option value="4"<c:if test="${userInf.store==4}">selected</c:if>>支店C</option>
 	</select>
-	<br />
+	<br/><br/>
 
-	<label for="dept">役職</label>
+	<label for="dept">役職</label><br/>
 	<select name="dept"id="dept">
-		<option value="1"<c:if test="${id.dept==1}">selected</c:if>>総務人事担当者</option>
-		<option value="2"<c:if test="${id.dept==2}">selected</c:if>>情報管理担当者</option>
-		<option value="3"<c:if test="${id.dept==3}">selected</c:if>>支店A店長</option>
-		<option value="4"<c:if test="${id.dept==4}">selected</c:if>>支店B店長</option>
-		<option value="5"<c:if test="${id.dept==5}">selected</c:if>>支店C店長</option>
-		<option value="6"<c:if test="${id.dept==6}">selected</c:if>>支店A社員</option>
-		<option value="7"<c:if test="${id.dept==7}">selected</c:if>>支店B社員</option>
-		<option value="8"<c:if test="${id.dept==8}">selected</c:if>>支店C社員</option>
+		<option value="1"<c:if test="${userInf.dept==1}">selected</c:if>>総務人事担当者</option>
+		<option value="2"<c:if test="${userInf.dept==2}">selected</c:if>>情報管理担当者</option>
+		<option value="3"<c:if test="${userInf.dept==3}">selected</c:if>>支店A店長</option>
+		<option value="4"<c:if test="${userInf.dept==4}">selected</c:if>>支店B店長</option>
+		<option value="5"<c:if test="${userInf.dept==5}">selected</c:if>>支店C店長</option>
+		<option value="6"<c:if test="${userInf.dept==6}">selected</c:if>>支店A社員</option>
+		<option value="7"<c:if test="${userInf.dept==7}">selected</c:if>>支店B社員</option>
+		<option value="8"<c:if test="${userInf.dept==8}">selected</c:if>>支店C社員</option>
 	</select>
-	<br />
+	<br/><br/>
 
 	<input type="submit" value="登録" /> <br />
 	<a href="userManage">戻る</a>
 	</div>
 
 </form>
-<div class="copyright">Copyright(c)Hirotaka Ikari</div>
+
 
 </body>
 </html>

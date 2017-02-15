@@ -10,7 +10,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ユーザー管理画面</title>
-
+	<link href="css/style.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 
 <!--
@@ -42,10 +42,12 @@ function confStart(){
 	<div class="users">
 		<table border="1">
 			<tr>
-				<td>ID</td>
-				<td>Name</td>
-				<td>State</td>
-				<td>Edit</td>
+				<td align="center">ID</td>
+				<td align="center">名前</td>
+				<td align="center">所属</td>
+				<td align="center">役職</td>
+				<td align="center">状態</td>
+				<td align="center">編集</td>
 			</tr>
 			<c:forEach items="${users}" var="users">
 
@@ -56,14 +58,21 @@ function confStart(){
 						<input type="hidden"id="state" name="state" value="${users.state}"/>
 
 						<tr>
-							<td>
+							<td align="center">
 								<span class="loginid"><c:out value="${users.login_id}" /></span>
 							</td>
 
-							<td>
+							<td align="center">
 								<span class="name"><c:out value="${users.name}" /></span>
 							</td>
-							<td>
+
+							<td align="center">
+								<span class="store_name"><c:out value="${users.store_name}" /></span>
+							</td>
+							<td align="center">
+								<span class="department_name"><c:out value="${users.department_name}" /></span>
+							</td>
+							<td align="center">
 								<c:if test="${users.state==0}">
 									<div>通常</div>
 								</c:if>
@@ -72,7 +81,7 @@ function confStart(){
 								</c:if>
 							</td>
 
-							<td>
+							<td align="center">
 
 								<c:if test="${users.state==0}">
 									<input type="submit" value="停止" onClick="return confStop()"/>

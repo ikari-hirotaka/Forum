@@ -38,7 +38,6 @@ public class UserManageServlet extends HttpServlet {
 			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("home");
 		}
-//		response.sendRedirect("userManage");
 	}
 
 	@Override
@@ -53,8 +52,8 @@ public class UserManageServlet extends HttpServlet {
 		us.setState(state);
 
 
-			new UserService().updateState(us);
-			response.sendRedirect("userManage");
+		new UserService().updateState(us);
+		response.sendRedirect("userManage");
 
 
 	}

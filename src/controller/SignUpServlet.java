@@ -48,21 +48,22 @@ public class SignUpServlet extends HttpServlet {
 		List<String> messages = new ArrayList<String>();
 
 		HttpSession session = request.getSession();
+
+		User user = new User();
+		user.setLogin_id(request.getParameter("id"));
+		user.setPass(request.getParameter("pass"));
+		user.setName(request.getParameter("name"));
+		user.setStore(Integer.parseInt(request.getParameter("store")));
+		user.setDept(Integer.parseInt(request.getParameter("dept")));
+
 		if (isValid(request, messages) == true) {
 
-			User user = new User();
-			user.setLogin_id(request.getParameter("id"));
-			user.setPass(request.getParameter("pass"));
-			user.setName(request.getParameter("name"));
-			user.setStore(Integer.parseInt(request.getParameter("store")));
-			user.setDept(Integer.parseInt(request.getParameter("dept")));
-
 			new UserService().register(user);
-
 			response.sendRedirect("userManage");
 		} else {
 			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("signup");
+			request.setAttribute("newUser", user);
+			request.getRequestDispatcher("signup.jsp").forward(request, response);
 		}
 	}
 

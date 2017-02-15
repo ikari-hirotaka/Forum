@@ -18,8 +18,21 @@ public class AllUserDao {
 
 		PreparedStatement ps = null;
 		try {
-			String sql = "select * from all_user";
-			ps = connection.prepareStatement(sql);
+			StringBuilder sql = new StringBuilder();
+			sql.append(" select users.id, ");
+			sql.append(" users.login_id, ");
+			sql.append(" users.name, ");
+			sql.append(" stores.name, ");
+			sql.append(" departments.name, ");
+			sql.append(" users.state ");
+			sql.append(" from ");
+			sql.append(" users,stores,departments ");
+			sql.append(" where ");
+			sql.append(" users.store_id=stores.id ");
+			sql.append(" and ");
+			sql.append(" users.department_id=departments.id ");
+			sql.append(" order by users.id ");
+			ps = connection.prepareStatement(sql.toString());
 			ResultSet rs = ps.executeQuery();
 			List<User> ret = toUserList(rs);
 
@@ -40,12 +53,16 @@ public class AllUserDao {
 				int id=rs.getInt("id");
 				String login_id = rs.getString("login_id");
 				String name = rs.getString("name");
+				String store_name = rs.getString("stores.name");
+				String department_name = rs.getString("departments.name");
 				int state = rs.getInt("state");
 
 				User user = new User();
 				user.setId(id);
 				user.setLogin_id(login_id);
 				user.setName(name);
+				user.setStore_name(store_name);
+				user.setDepartment_name(department_name);
 				user.setState(state);
 
 				ret.add(user);

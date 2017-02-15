@@ -10,10 +10,24 @@ public class User implements Serializable {
 	private String pass;
 	private String name;
 	private int store;
+	private String store_name;
+	private String department_name;
 	private int dept;
 	private int state;
 
 
+	public String getStore_name() {
+		return store_name;
+	}
+	public void setStore_name(String store_name) {
+		this.store_name = store_name;
+	}
+	public String getDepartment_name() {
+		return department_name;
+	}
+	public void setDepartment_name(String department_name) {
+		this.department_name = department_name;
+	}
 	public int getId() {
 		return id;
 	}

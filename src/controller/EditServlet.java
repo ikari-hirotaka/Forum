@@ -31,7 +31,7 @@ public class EditServlet extends HttpServlet {
 		User user = (User) session.getAttribute("user");
 		if(user.getDept()==1){
 			user=new UserService().userEdit(id);
-			session.setAttribute("id",user);
+			request.setAttribute("userInf",user);
 			request.getRequestDispatcher("edit.jsp").forward(request, response);
 		} else {
 
@@ -53,20 +53,22 @@ public class EditServlet extends HttpServlet {
 		List<String> messages = new ArrayList<String>();
 
 		HttpSession session = request.getSession();
+		User up = new User();
+		up.setId(Integer.parseInt(request.getParameter("id")));
+		up.setLogin_id(request.getParameter("loginid"));
+		up.setPass(request.getParameter("pass1"));
+		up.setName(request.getParameter("name"));
+		up.setStore(Integer.parseInt(request.getParameter("store")));
+		up.setDept(Integer.parseInt(request.getParameter("dept")));
+
 		if (isValid(request, messages) == true) {
 
-			User up = new User();
-			up.setId(Integer.parseInt(request.getParameter("id")));
-			up.setLogin_id(request.getParameter("loginid"));
-			up.setPass(request.getParameter("pass1"));
-			up.setName(request.getParameter("name"));
-			up.setStore(Integer.parseInt(request.getParameter("store")));
-			up.setDept(Integer.parseInt(request.getParameter("dept")));
 
 			new UserService().userUpdate(up);
 			response.sendRedirect("userManage");
 		} else {
 			session.setAttribute("errorMessages", messages);
+			request.setAttribute("userInf", up);
 			request.getRequestDispatcher("edit.jsp").forward(request, response);
 		}
 

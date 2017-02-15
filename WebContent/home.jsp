@@ -7,42 +7,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ForumTop</title>
+	<link href="css/style.css" rel="stylesheet" type="text/css">
 
-<script type="text/javascript">
-
-<!--
-function menu(){
-	document.getElementById("new").style="";
-	document.getElementById("manage").style="";
-	document.getElementById("out").style="";
-
-}
-function outMenu(){
-	document.getElementById("new").style="visibility:hidden";
-	document.getElementById("manage").style="visibility:hidden";
-	document.getElementById("out").style="visibility:hidden";
-}
-
-function narrow(){
-	var element = document.getElementById( "target" ) ;
-	var rect = element.getBoundingClientRect() ;
-	var positionX = rect.left + window.pageXOffset ;
-	var positionY = rect.top + window.pageYOffset ;
-
-	window.scrollTo( positionX, positionY ) ;
-}
-
--->
-
-</script>
 </head>
 <body>
 こんにちは ${user.name} さん。 <a href="logout">ログアウト</a><br/>
-<span onMouseOver="menu()" onMouseOut="outMenu()">menu</span>
+<span>menu</span>
 
-<div id="new" style="visibility:hidden"><a href="newPost" onMouseOver="menu()" onMouseOut="outMenu()">新規投稿</a></div>
-<div id="manage" style="visibility:hidden"><a href="userManage" onMouseOver="menu()" onMouseOut="outMenu()">ユーザー管理</a></div>
-
+<a href="newPost">新規投稿</a>
+<a href="userManage">ユーザー管理</a>
 
 
 	<c:if test="${ not empty errorMessages }">
@@ -55,24 +28,49 @@ function narrow(){
 		</div>
 		<c:remove var="errorMessages" scope="session"/>
 	</c:if>
-<h4 onClick="narrow()">絞込み↓</h4>
-<br/>
-<c:forEach items="${posts}" var="posts">
-${posts.id}
- <br/>
 
-title:${posts.title}
+<h4 id="target">絞込み</h4>
 <br/>
-text: <br/><br/>${posts.text}
+<form action="home" method="Get">
+カテゴリー:
+<br/>
+<select id="category" name="category">
+	<option value="">すべて</option>
+	<c:forEach items="${cate}" var="cate">
+		<option value="${cate.category}"> ${cate.category} </option>
+	</c:forEach>
+</select>
+<br/>
+
+日時:
+<br/>
+<input type="date" id="date1" name="date1" value="${sdate}"/>
+～
+<input type="date" id="date2" name="date2"value="${gdate}"/>
+<br/>
+<input type="submit" value="実行"/>
+
+</form>
+<br/>
+<br/>
+<br/>
+
+<c:forEach items="${posts}" var="posts">
+
+ <br/>
+<p class="textname"> ${posts.id} </p>
+<p class="textname">件名:</p>${posts.title}
+<br/>
+<p class="textname">本文:</p>${posts.text}
 <br/><br/>
-category:${posts.category}
+<p class="textname">カテゴリー:</p>${posts.category}
 <br/>
-insert_date:${posts.insert_date}
+<p class="textname">投稿日:</p>${posts.insert_date}
 <br/>
-name:${posts.name}
+<p class="textname">投稿者:</p>${posts.name}
 <c:if test="${comments!=null}"></c:if>
 <br/>
-Comment:<br/>
+<p class="textname">コメント: </p><br/>
 <c:forEach items="${com}" var="com">
 <c:if test="${com.post_id==posts.id}">
 >> ${com.post_id}
@@ -82,6 +80,7 @@ Comment:<br/>
  ${com.user_name}
 <br/>
 ${com.insert_date}
+<br/>
 <br/>
 </c:if>
 </c:forEach>
@@ -101,26 +100,7 @@ ${com.insert_date}
 
 </c:forEach>
 
-<h4 id="target">絞込み</h4>
-<br/>
-<form action="home" method="Get">
-カテゴリー:
-<br/>
-<input type="text" id="cate" name="cate" maxlength=10/>
-<br/>
 
-日時:
-<br/>
-<input type="date" id="date1" name="date1"/>
-～
-<input type="date" id="date2" name="date2"/>
-<br/>
-<input type="submit" value="実行"/>
-
-</form>
-<br/>
-<br/>
-<br/>
 
 </body>
 </html>

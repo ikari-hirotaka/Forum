@@ -68,7 +68,7 @@ public class PostDao {
 			sql.append(" and ");
 
 			if(!StringUtils.isEmpty(category)){
-				sql.append(" posts.category = ? ");
+				sql.append(" posts.category like ? ");
 				sql.append(" and ");
 			}
 
@@ -76,9 +76,12 @@ public class PostDao {
 			sql.append(" and ");
 			sql.append(" posts.insert_date <= ? ");
 
+			sql.append(" order by id desc ");
+
+
 			ps = connection.prepareStatement(sql.toString());
 			if(!StringUtils.isEmpty(category)){
-				ps.setString(1, category);
+				ps.setString(1, "%"+category+"%");
 				ps.setString(2, date1);
 				ps.setString(3, date2);
 			}else{
@@ -152,6 +155,53 @@ public class PostDao {
 		}
 
 
+	}
+
+	public List<Posts> getCategories(Connection connection) {
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append(" select ");
+			sql.append(" distinct ");
+			sql.append(" category ");
+			sql.append(" from ");
+			sql.append(" posts ");
+
+
+
+			ps = connection.prepareStatement(sql.toString());
+
+			ResultSet rs = ps.executeQuery();
+			List<Posts> cate = cate(rs);
+
+			return cate;
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+
+	}
+
+	private  List<Posts> cate(ResultSet rs) throws SQLException {
+		List<Posts> ret = new ArrayList<Posts>();
+		try {
+			while (rs.next()) {
+
+				String category= rs.getString("category");
+
+
+
+				Posts cate = new Posts();
+				cate.setCategory(category);
+
+
+				ret.add(cate);
+			}
+			return ret;
+		} finally {
+			close(rs);
+		}
 	}
 
 

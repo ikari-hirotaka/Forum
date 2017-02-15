@@ -3,6 +3,8 @@ package controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,11 +31,14 @@ public class CommentServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int post_id = Integer.parseInt(request.getParameter("post_id"));
-		int user_id = Integer.parseInt(request.getParameter("user_id"));
-		String comment = request.getParameter("comment");
-		System.out.println(post_id);
-		System.out.println(user_id);
-		System.out.println(comment);
+
+		String regex = "\\r\\n";
+		Pattern p = Pattern.compile(regex);
+
+		Matcher m = p.matcher(request.getParameter("comment"));
+		String comment = m.replaceAll("<br/>");
+
+
 
 		List<String> c_messages = new ArrayList<String>();
 		HttpSession session = request.getSession();
@@ -54,7 +59,7 @@ public class CommentServlet extends HttpServlet {
 
 		} else {
 			session.setAttribute("errorMessages", c_messages);
-			response.sendRedirect("home");
+			request.getRequestDispatcher("home.jsp").forward(request, response);
 		}
 
 	}

@@ -75,4 +75,24 @@ public class PostService {
 		}
 	}
 
+	public List<Posts> getCategories() {
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			PostDao pDao = new PostDao();
+			List<Posts> ret = pDao.getCategories(connection);
+
+			commit(connection);
+			return ret;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
 }
