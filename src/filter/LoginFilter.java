@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpSession;
 
-import beans.User;
 
 
 
@@ -28,7 +27,6 @@ public class LoginFilter implements Filter {
 		HttpSession session = ((HttpServletRequest) request).getSession();
 
 
-		User user = (User) session.getAttribute("loginUser");
 		if(session.getAttribute("loginUser")==null){
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}else{

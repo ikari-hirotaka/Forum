@@ -59,7 +59,8 @@ public class CommentServlet extends HttpServlet {
 
 		} else {
 			session.setAttribute("errorMessages", c_messages);
-			request.getRequestDispatcher("home.jsp").forward(request, response);
+			request.setAttribute("comme", request.getParameter("comment"));
+			response.sendRedirect("home");
 		}
 
 	}

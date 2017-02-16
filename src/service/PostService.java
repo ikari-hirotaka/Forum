@@ -10,7 +10,6 @@ import java.util.List;
 import beans.NewPost;
 import beans.Posts;
 import dao.PostDao;
-import dao.UserDao;
 
 public class PostService {
 

@@ -58,7 +58,7 @@
 <c:forEach items="${posts}" var="posts">
 
  <br/>
-<p class="textname"> ${posts.id} </p>
+
 <p class="textname">件名:</p><p class="textmain">${posts.title}</p>
 
 <p class="textname">本文:</p><p class="textmain">${posts.text}</p>
@@ -87,7 +87,7 @@
 <p class="textname">コメント: </p>
 <c:forEach items="${com}" var="com">
 <c:if test="${com.post_id==posts.id}">
->> ${com.post_id}
+>> ${posts.title}
 <br/>
  ${com.text}
  <br/>
@@ -101,11 +101,11 @@ ${com.insert_date}
 
 
 
->> ${posts.id}
+>> ${posts.title}
 <form action="comment" method="Post">
 <input type="hidden" id="post_id" name="post_id" value="${posts.id}"/>
 <input type="hidden" id="user_id" name="user_id" value="${user.id}"/>
-<textarea id="comment" name="comment" cols="30" rows="10" maxlength="500"></textarea>
+<textarea id="comment" name="comment" cols="30" rows="10" maxlength="500"><c:if test=" ${!comme.isEmpty()}"> ${comme}</c:if></textarea>
 <br/>
 <input type="submit" value="コメント送信"/>
 </form>
