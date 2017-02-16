@@ -9,6 +9,7 @@
 	<link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<h3>新規投稿画面</h3>
 	<c:if test="${ not empty errorMessages }">
 		<div class="errorMessages">
 			<ul>
@@ -22,15 +23,15 @@
 	<form action="newPost" method="post">
 
 		件名<br/>
-		<input type="text" id="title" name="title" maxlength="50"/><br/>
+		<input type="text" id="title" name="title" maxlength="50"value="${ newTitle }"/><br/><br/>
 
 		本文<br/>
-		<textarea id="text" name="text" cols="35" rows="10" maxlength="1000"></textarea><br/>
+		<textarea id="text" name="text" cols="35" rows="10" maxlength="1000" >${ newMain }</textarea><br/><br/>
 
 		カテゴリー<br/>
-		<input type="text" id="category" name="category" maxlength="10"/><br/>
+		<input type="text" id="category" name="category" maxlength="10" value="${ newCategory }"/><br/><br/>
 
-		<input type="submit" value="送信"/><br/>
+		<input type="submit" value="送信"/><br/><br/>
 		<a href="home">戻る</a>
 
 	</form>

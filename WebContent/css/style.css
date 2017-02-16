@@ -1,5 +1,5 @@
 body {
-	background-color: #B8860B;
+	background-color: #CBFFD3;
 }
 
 .main-contents {
@@ -7,13 +7,18 @@ body {
 	margin-bottom: 0px;
 	margin-left: 20px;
 	margin-right: 20px;
-	background-color: white;
+
 	height: 100%;
 	width: 800px;
 }
 
 .textname {
 	font-weight: bolder;
+}
+.textmain{
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-left: 10px;
 }
 .errorMessages {
 	margin-top: 10px;

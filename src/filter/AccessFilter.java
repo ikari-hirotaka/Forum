@@ -1,6 +1,8 @@
 package filter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -16,8 +18,8 @@ import beans.User;
 
 
 
-@WebFilter(urlPatterns={"/home","/newPost","/signup","/userManage","/edit","/comment"})
-public class LoginFilter implements Filter {
+@WebFilter(urlPatterns={"/signup","/userManage","/edit","/delete"})
+public class AccessFilter implements Filter {
 
 
 
@@ -27,10 +29,13 @@ public class LoginFilter implements Filter {
 
 		HttpSession session = ((HttpServletRequest) request).getSession();
 
-
 		User user = (User) session.getAttribute("loginUser");
-		if(session.getAttribute("loginUser")==null){
-			request.getRequestDispatcher("login.jsp").forward(request, response);
+
+		if(user.getDept()!=1){
+			List<String> messages = new ArrayList<String>();
+			messages.add("アクセス権を持っていません。");
+			session.setAttribute("errorMessages", messages);
+			request.getRequestDispatcher("home").forward(request, response);
 		}else{
 			chain.doFilter(request, response);
 		}

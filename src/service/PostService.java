@@ -10,6 +10,7 @@ import java.util.List;
 import beans.NewPost;
 import beans.Posts;
 import dao.PostDao;
+import dao.UserDao;
 
 public class PostService {
 
@@ -94,5 +95,27 @@ public class PostService {
 			close(connection);
 		}
 	}
+
+	public void PostDelete(int id) {
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			PostDao postDao = new PostDao();
+			postDao.postDelete(connection, id);
+
+			commit(connection);
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
+
 
 }

@@ -37,6 +37,22 @@ function confStart(){
 </head>
 
 <body>
+<h3>ユーザー管理画面</h3>
+<div class="main-contents">
+
+<c:if test="${ not empty errorMessages }">
+	<div class="errorMessages">
+		<ul>
+			<c:forEach items="${errorMessages}" var="message">
+				<li><c:out value="${message}" />
+			</c:forEach>
+		</ul>
+	</div>
+	<c:remove var="errorMessages" scope="session"/>
+
+</c:if>
+
+	<a href="home">ホーム</a><br/><br/>
 	<a href="signup">ユーザー新規登録</a><br/>
 
 	<div class="users">
@@ -93,6 +109,8 @@ function confStart(){
 
 								<a href="edit?id=${users.id}">編集</a>
 
+								<a href="delete?id=${users.id}" onClick="return confirm('${users.name}を削除してよろしいですか？')">削除</a>
+
 							</td>
 
 						</tr>
@@ -102,7 +120,8 @@ function confStart(){
 
 		</table>
 	</div>
-	<a href="home">ホーム</a>
+
+	</div>
 </body>
 
 </html>

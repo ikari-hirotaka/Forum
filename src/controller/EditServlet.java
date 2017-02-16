@@ -26,20 +26,41 @@ public class EditServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		int id=Integer.parseInt(request.getParameter("id"));
 
-		User user = (User) session.getAttribute("user");
-		if(user.getDept()==1){
-			user=new UserService().userEdit(id);
-			request.setAttribute("userInf",user);
-			request.getRequestDispatcher("edit.jsp").forward(request, response);
-		} else {
+		int id = 0;
+
+		try{
+
+			id=Integer.parseInt(request.getParameter("id"));
+
+		}catch(NumberFormatException e){
 
 			List<String> messages = new ArrayList<String>();
-			messages.add("アクセス権を持っていません。");
+			messages.add("対象のユーザーは存在しません。");
 			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("home");
+			response.sendRedirect("userManage");
+			return;
 		}
+
+
+		User user = (User) session.getAttribute("loginUser");
+
+
+		User edit=new UserService().userEdit(id);
+
+		if(edit.getLogin_id()==null){
+			List<String> messages = new ArrayList<String>();
+			messages.add("対象のユーザーは存在しません。");
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("userManage");
+		}else if(user.getDept()==1){
+
+			request.setAttribute("userInf",edit);
+			request.getRequestDispatcher("edit.jsp").forward(request, response);
+
+		}
+
+
 
 
 	}

@@ -59,6 +59,8 @@ public class HomeServlet extends HttpServlet {
 
 		List<Posts> posts = new PostService().getPosts(category,date1,date2);
 
+
+
 		List<Posts> categories = new PostService().getCategories();
 
 		List<Comment> com = new CommentService().getComment();
@@ -67,6 +69,7 @@ public class HomeServlet extends HttpServlet {
 		request.setAttribute("cate", categories);
 		request.setAttribute("posts", posts);
 		request.setAttribute("com", com);
+		request.setAttribute("defcate",category);
 		request.setAttribute("sdate", sdate);
 		request.setAttribute("gdate", gdate);
 		request.setAttribute("isPosts", isPosts);

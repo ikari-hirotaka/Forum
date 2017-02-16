@@ -56,6 +56,9 @@ public class PostDao {
 			StringBuilder sql = new StringBuilder();
 			sql.append(" select ");
 			sql.append(" posts.id , ");
+			sql.append(" users.id as userid , ");
+			sql.append(" users.store_id , ");
+			sql.append(" users.department_id , ");
 			sql.append(" posts.title , ");
 			sql.append(" posts.text , ");
 			sql.append(" users.name , ");
@@ -76,10 +79,11 @@ public class PostDao {
 			sql.append(" and ");
 			sql.append(" posts.insert_date <= ? ");
 
-			sql.append(" order by id desc ");
+			sql.append(" order by posts.id desc ");
 
 
 			ps = connection.prepareStatement(sql.toString());
+
 			if(!StringUtils.isEmpty(category)){
 				ps.setString(1, "%"+category+"%");
 				ps.setString(2, date1);
@@ -105,6 +109,9 @@ public class PostDao {
 		try {
 			while (rs.next()) {
 				int id= rs.getInt("id");
+				int user_id=rs.getInt("userid");
+				int dept=rs.getInt("department_id");
+				int store=rs.getInt("store_id");
 				String title=rs.getString("title");
 				String text = rs.getString("text");
 				String category= rs.getString("category");
@@ -114,6 +121,9 @@ public class PostDao {
 
 				Posts posts = new Posts();
 				posts.setId(id);
+				posts.setUser_id(user_id);
+				posts.setDept(dept);
+				posts.setStore(store);
 				posts.setTitle(title);
 				posts.setText(text);
 				posts.setCategory(category);
@@ -202,6 +212,21 @@ public class PostDao {
 		} finally {
 			close(rs);
 		}
+	}
+
+	public void postDelete(Connection connection, int id) {
+		PreparedStatement ps = null;
+		try{
+			String sql=" delete from posts where id=? ";
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+
 	}
 
 

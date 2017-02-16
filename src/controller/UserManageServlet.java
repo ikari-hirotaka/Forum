@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -24,19 +23,13 @@ public class UserManageServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 
-		User user = (User) session.getAttribute("user");
-		if(user.getDept()==1){
+		User user = (User) session.getAttribute("loginUser");
+		if(user!=null){
 			List<User> users=new UserService().getUser();
 
 			request.setAttribute("users", users);
 
 			request.getRequestDispatcher("userManage.jsp").forward(request, response);
-		} else {
-
-			List<String> messages = new ArrayList<String>();
-			messages.add("アクセス権を持っていません。");
-			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("home");
 		}
 	}
 

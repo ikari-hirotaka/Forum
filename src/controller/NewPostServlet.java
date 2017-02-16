@@ -37,17 +37,20 @@ public class NewPostServlet extends HttpServlet {
 		List<String> messages = new ArrayList<String>();
 
 		HttpSession session = request.getSession();
+
+		NewPost np = new NewPost();
+		np.setTitle(request.getParameter("title"));
+
+		String regex = "\\r\\n";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(request.getParameter("text"));
+
+		np.setMain(m.replaceAll("<br/>"));
+		np.setCategory(request.getParameter("category"));
+
 		if (isValid(request, messages) == true) {
 			User user = (User) session.getAttribute("loginUser");
-			NewPost np = new NewPost();
-			np.setTitle(request.getParameter("title"));
 
-			String regex = "\\r\\n";
-			Pattern p = Pattern.compile(regex);
-			Matcher m = p.matcher(request.getParameter("text"));
-
-			np.setMain(m.replaceAll("<br/>"));
-			np.setCategory(request.getParameter("category"));
 			np.setId(user.getId());
 
 			new PostService().newPost(np);
@@ -55,6 +58,9 @@ public class NewPostServlet extends HttpServlet {
 
 		} else {
 			session.setAttribute("errorMessages", messages);
+			request.setAttribute("newTitle", request.getParameter("title"));
+			request.setAttribute("newMain", request.getParameter("text"));
+			request.setAttribute("newCategory", request.getParameter("category"));
 			request.getRequestDispatcher("newPost.jsp").forward(request, response);
 		}
 

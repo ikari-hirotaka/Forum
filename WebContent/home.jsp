@@ -29,15 +29,15 @@
 		<c:remove var="errorMessages" scope="session"/>
 	</c:if>
 
-<h4 id="target">絞込み</h4>
-<br/>
+
 <form action="home" method="Get">
+<h4 id="target">絞込み</h4>
 カテゴリー:
 <br/>
 <select id="category" name="category">
-	<option value="">すべて</option>
+	<option value="" <c:if test="${defcate==null}">selected</c:if> >すべて
 	<c:forEach items="${cate}" var="cate">
-		<option value="${cate.category}"> ${cate.category} </option>
+		<option value="${cate.category}" <c:if test="${defcate==cate.category}">selected</c:if> > ${cate.category} </option>
 	</c:forEach>
 </select>
 <br/>
@@ -59,18 +59,32 @@
 
  <br/>
 <p class="textname"> ${posts.id} </p>
-<p class="textname">件名:</p>${posts.title}
-<br/>
-<p class="textname">本文:</p>${posts.text}
-<br/><br/>
-<p class="textname">カテゴリー:</p>${posts.category}
-<br/>
-<p class="textname">投稿日:</p>${posts.insert_date}
-<br/>
-<p class="textname">投稿者:</p>${posts.name}
+<p class="textname">件名:</p><p class="textmain">${posts.title}</p>
+
+<p class="textname">本文:</p><p class="textmain">${posts.text}</p>
+
+<p class="textname">カテゴリー:</p><p class="textmain">${posts.category}</p>
+
+<p class="textname">投稿日:</p><p class="textmain">${posts.insert_date}</p>
+
+<p class="textname">投稿者:</p><p class="textmain">${posts.name}</p>
 <c:if test="${comments!=null}"></c:if>
-<br/>
-<p class="textname">コメント: </p><br/>
+
+<c:choose>
+	<c:when test="${user.dept==2}">
+		<a href="postDelete?postId=${posts.id}">削除</a>
+	</c:when>
+
+	<c:when test="${posts.user_id==user.id}">
+		<a href="postDelete?postId=${posts.id}">削除</a>
+	</c:when>
+
+	<c:when test="${user.store==posts.store&&user.dept==3}">
+		<a href="postDelete?postId=${posts.id}">削除</a>
+	</c:when>
+</c:choose>
+
+<p class="textname">コメント: </p>
 <c:forEach items="${com}" var="com">
 <c:if test="${com.post_id==posts.id}">
 >> ${com.post_id}

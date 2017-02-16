@@ -12,6 +12,7 @@
 	<link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<h3>ユーザー編集画面</h3>
 <div class="main-contents">
 
 <c:if test="${ not empty errorMessages }">
@@ -55,16 +56,13 @@
 	<select name="dept"id="dept">
 		<option value="1"<c:if test="${userInf.dept==1}">selected</c:if>>総務人事担当者</option>
 		<option value="2"<c:if test="${userInf.dept==2}">selected</c:if>>情報管理担当者</option>
-		<option value="3"<c:if test="${userInf.dept==3}">selected</c:if>>支店A店長</option>
-		<option value="4"<c:if test="${userInf.dept==4}">selected</c:if>>支店B店長</option>
-		<option value="5"<c:if test="${userInf.dept==5}">selected</c:if>>支店C店長</option>
-		<option value="6"<c:if test="${userInf.dept==6}">selected</c:if>>支店A社員</option>
-		<option value="7"<c:if test="${userInf.dept==7}">selected</c:if>>支店B社員</option>
-		<option value="8"<c:if test="${userInf.dept==8}">selected</c:if>>支店C社員</option>
+		<option value="3"<c:if test="${userInf.dept==3}">selected</c:if>>店長</option>
+		<option value="4"<c:if test="${userInf.dept==4}">selected</c:if>>社員</option>
+
 	</select>
 	<br/><br/>
 
-	<input type="submit" value="登録" /> <br />
+	<input type="submit" value="登録" /> <br /><br />
 	<a href="userManage">戻る</a>
 	</div>
 

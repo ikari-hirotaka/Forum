@@ -143,8 +143,6 @@ public class UserDao {
 
 			ps.setInt(1,id);
 
-
-
 			ResultSet rs = ps.executeQuery();
 			User edit = edit(rs);
 			return edit;
@@ -169,15 +167,11 @@ public class UserDao {
 				int store = rs.getInt("store_id");
 				int dept = rs.getInt("department_id");
 
-
-
 				ue.setId(id);
 				ue.setLogin_id(loginid);
 				ue.setName(name);
 				ue.setStore(store);
 				ue.setDept(dept);
-
-
 
 			}
 			return ue;
@@ -234,6 +228,21 @@ public class UserDao {
 		} finally {
 			close(ps);
 		}
+	}
+
+	public void userDelete(Connection connection, int id) {
+		PreparedStatement ps = null;
+		try{
+			String sql=" delete from users where id=? ";
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+
 	}
 
 

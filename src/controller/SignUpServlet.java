@@ -23,19 +23,8 @@ public class SignUpServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
+		request.getRequestDispatcher("signup.jsp").forward(request, response);
 
-		HttpSession session = request.getSession();
-
-		User user = (User) session.getAttribute("user");
-		if(user.getDept()==1){
-			request.getRequestDispatcher("signup.jsp").forward(request, response);
-		} else {
-
-			List<String> messages = new ArrayList<String>();
-			messages.add("アクセス権を持っていません。");
-			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("home");
-		}
 
 
 

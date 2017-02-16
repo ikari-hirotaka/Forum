@@ -6,11 +6,28 @@ public class Posts implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int id;
+	private int user_id;
+	private int dept;
+	private int store;
 	private String title;
 	private String text;
 	private String category;
 	private String insert_date ;
 	private String name;
+
+
+	public int getDept() {
+		return dept;
+	}
+	public void setDept(int dept) {
+		this.dept = dept;
+	}
+	public int getStore() {
+		return store;
+	}
+	public void setStore(int store) {
+		this.store = store;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -46,6 +63,12 @@ public class Posts implements Serializable {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
 	}
 
 
