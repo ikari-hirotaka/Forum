@@ -31,11 +31,15 @@ public class AccessFilter implements Filter {
 
 		User user = (User) session.getAttribute("loginUser");
 
-		if(user.getDept()!=1){
+		if(user==null){
+			request.getRequestDispatcher("login").forward(request, response);
+			return;
+		}else if(user.getDept()!=1){
 			List<String> messages = new ArrayList<String>();
 			messages.add("アクセス権を持っていません。");
 			session.setAttribute("errorMessages", messages);
 			request.getRequestDispatcher("./").forward(request, response);
+			return;
 		}else{
 			chain.doFilter(request, response);
 		}

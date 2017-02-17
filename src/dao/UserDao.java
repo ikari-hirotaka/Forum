@@ -200,13 +200,7 @@ public class UserDao {
 
 
 			ps = connection.prepareStatement(sql.toString());
-			System.out.println(sql.toString());
-			System.out.println("1="+up.getLogin_id());
-			System.out.println("2="+up.getPass());
-			System.out.println("3="+up.getName());
-			System.out.println("4="+up.getStore());
-			System.out.println("5="+up.getDept());
-			System.out.println("6="+up.getId());
+
 
 			ps.setString(1, up.getLogin_id());
 			if(!up.getPass().isEmpty()){
@@ -274,6 +268,64 @@ public class UserDao {
 	}
 
 	private List<User> ReGet(ResultSet rs) throws SQLException {
+
+		List<User> ret = new ArrayList<User>();
+		try {
+			while (rs.next()) {
+				int id=rs.getInt("id");
+				String login_id = rs.getString("login_id");
+				String pass = rs.getString("password");
+				String name = rs.getString("name");
+				int store = rs.getInt("store_id");
+				int dept = rs.getInt("department_id");
+				int state = rs.getInt("state");
+
+				User user = new User();
+				user.setId(id);
+				user.setLogin_id(login_id);
+				user.setPass(pass);
+				user.setName(name);
+				user.setStore(store);
+				user.setDept(dept);
+				user.setState(state);
+
+				ret.add(user);
+			}
+			return ret;
+		} finally {
+			close(rs);
+		}
+	}
+
+	public User Check(Connection connection, String id) {
+		PreparedStatement ps = null;
+		try {
+			String sql = "select * from users where login_id = ?  ";
+			ps = connection.prepareStatement(sql);
+
+			ps.setString(1, id);
+
+
+
+			ResultSet rs = ps.executeQuery();
+			List<User> Check = CheckUser(rs);
+			if (Check.isEmpty() == true) {
+				return null;
+			} else if (2 <= Check.size()) {
+				throw new IllegalStateException("2 <= userList.size()");
+			} else {
+				return Check.get(0);
+			}
+
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+
+	}
+
+	private List<User> CheckUser(ResultSet rs) throws SQLException {
 
 		List<User> ret = new ArrayList<User>();
 		try {

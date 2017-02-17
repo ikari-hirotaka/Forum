@@ -23,6 +23,11 @@ public class SignUpServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("loginUser");
+		int id=user.getId();
+		user=new UserService().ReGet(id);
+		session.setAttribute("loginUser",user);
 		request.getRequestDispatcher("signup.jsp").forward(request, response);
 
 	}
@@ -58,7 +63,9 @@ public class SignUpServlet extends HttpServlet {
 		String pass = request.getParameter("pass");
 		String name = request.getParameter("name");
 
-		if (StringUtils.isEmpty(id)||id.length()<6) {
+		if(new UserService().CheckUser(id)!=null){
+			messages.add("そのIDはすでに利用されています。");
+		}else if (StringUtils.isEmpty(id)||id.length()<6) {
 			messages.add("6文字以上のIDを入力してください");
 		}else if(!id.matches("[0-9a-zA-Z]+")){
 			messages.add("IDに使用できるのは半角英数字のみです。");
@@ -76,7 +83,7 @@ public class SignUpServlet extends HttpServlet {
 			messages.add("名前は10文字以下で入力してください");
 		}
 
-		// TODO アカウントが既に利用されていないか、メールアドレスが既に登録されていないかなどの確認も必要
+
 		if (messages.size() == 0) {
 			return true;
 		} else {

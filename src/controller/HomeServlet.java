@@ -33,6 +33,7 @@ public class HomeServlet extends HttpServlet {
 		User user = (User) session.getAttribute("loginUser");
 		int id=user.getId();
 		user=new UserService().ReGet(id);
+		session.setAttribute("loginUser", user);
 
 		boolean isPosts;
 		if (user != null) {

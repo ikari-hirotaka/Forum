@@ -172,4 +172,27 @@ public class UserService {
 		}
 
 	}
+
+	public Object CheckUser(String id) {
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			UserDao userDao = new UserDao();
+
+			User user = userDao.Check(connection, id);
+
+			commit(connection);
+
+			return user;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
 }

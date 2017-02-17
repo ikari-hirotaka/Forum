@@ -46,6 +46,7 @@ public class EditServlet extends HttpServlet {
 		User user = (User) session.getAttribute("loginUser");
 		int user_id=user.getId();
 		user=new UserService().ReGet(user_id);
+		session.setAttribute("loginUser",user);
 
 
 		User edit=new UserService().userEdit(id);
@@ -104,14 +105,19 @@ public class EditServlet extends HttpServlet {
 	}
 
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
-		String id = request.getParameter("loginid");
+
+		String login_id = request.getParameter("loginid");
 		String pass1 = request.getParameter("pass1");
 		String pass2 = request.getParameter("pass2");
 		String name = request.getParameter("name");
-
-		if (StringUtils.isEmpty(id) || id.length() < 6) {
+		User check = (User) new UserService().CheckUser(login_id);
+		System.out.println("++"+check.getLogin_id());
+		System.out.println(login_id);
+		if(check!=null){
+			messages.add("そのIDはすでに利用されています。");
+		} else if (StringUtils.isEmpty(login_id) || login_id.length() < 6) {
 			messages.add("6文字以上のIDを入力してください");
-		} else if (!id.matches("[0-9a-zA-Z]+")) {
+		} else if (!login_id.matches("[0-9a-zA-Z]+")) {
 			messages.add("IDに使用できるのは半角英数字のみです");
 		}
 		if (!pass1.isEmpty()&&!pass2.isEmpty()&&pass1.length() < 6) {

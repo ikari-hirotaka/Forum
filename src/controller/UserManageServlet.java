@@ -26,6 +26,7 @@ public class UserManageServlet extends HttpServlet {
 		User user = (User) session.getAttribute("loginUser");
 		int id=user.getId();
 		user=new UserService().ReGet(id);
+		session.setAttribute("loginUser",user);
 
 		if(user!=null){
 			List<User> users=new UserService().getUser();

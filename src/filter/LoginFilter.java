@@ -29,6 +29,7 @@ public class LoginFilter implements Filter {
 
 		if(session.getAttribute("loginUser")==null){
 			request.getRequestDispatcher("login").forward(request, response);
+			return;
 		}else{
 			chain.doFilter(request, response);
 		}
