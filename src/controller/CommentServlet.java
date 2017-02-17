@@ -25,7 +25,7 @@ public class CommentServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.sendRedirect("home");
+		response.sendRedirect("./");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -55,12 +55,12 @@ public class CommentServlet extends HttpServlet {
 
 			new CommentService().newComment(nc);
 
-			response.sendRedirect("home");
+			response.sendRedirect("./");
 
 		} else {
 			session.setAttribute("errorMessages", c_messages);
 			request.setAttribute("comme", request.getParameter("comment"));
-			response.sendRedirect("home");
+			response.sendRedirect("./");
 		}
 
 	}

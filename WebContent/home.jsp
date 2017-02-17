@@ -69,20 +69,24 @@
 
 <p class="textname">投稿者:</p><p class="textmain">${posts.name}</p>
 <c:if test="${comments!=null}"></c:if>
-
+<form action="postDelete" method="Post">
+<input type="hidden" id="post_id" name="post_id" value="${posts.id}"/>
+<input type="hidden" id="post_user_id" name="post_user_id" value="${posts.user_id}"/>
+<input type="hidden" id="post_store" name="post_store" value="${posts.store}"/>
 <c:choose>
 	<c:when test="${user.dept==2}">
-		<a href="postDelete?postId=${posts.id}">削除</a>
+		<input type="submit" value="削除"/>
 	</c:when>
 
 	<c:when test="${posts.user_id==user.id}">
-		<a href="postDelete?postId=${posts.id}">削除</a>
+		<input type="submit" value="削除"/>
 	</c:when>
 
 	<c:when test="${user.store==posts.store&&user.dept==3}">
-		<a href="postDelete?postId=${posts.id}">削除</a>
+		<input type="submit" value="削除"/>
 	</c:when>
 </c:choose>
+</form>
 
 <p class="textname">コメント: </p>
 <c:forEach items="${com}" var="com">

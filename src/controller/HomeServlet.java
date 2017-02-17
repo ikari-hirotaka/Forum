@@ -20,7 +20,7 @@ import beans.User;
 import service.CommentService;
 import service.PostService;
 
-@WebServlet(urlPatterns = { "/home" })
+@WebServlet(urlPatterns = { "/index.jsp" })
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

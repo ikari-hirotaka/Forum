@@ -54,7 +54,7 @@ public class NewPostServlet extends HttpServlet {
 			np.setId(user.getId());
 
 			new PostService().newPost(np);
-			response.sendRedirect("home");
+			response.sendRedirect("./");
 
 		} else {
 			session.setAttribute("errorMessages", messages);

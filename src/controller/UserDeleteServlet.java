@@ -30,6 +30,7 @@ public class UserDeleteServlet extends HttpServlet {
 
 		int id = 0;
 
+
 		try{
 
 			id=Integer.parseInt(request.getParameter("id"));
@@ -41,19 +42,12 @@ public class UserDeleteServlet extends HttpServlet {
 			session.setAttribute("errorMessages", messages);
 			response.sendRedirect("userManage");
 			return;
+
 		}
-
-
-
 
 		new UserService().userDelete(id);
 
-
 		response.sendRedirect("userManage");
-
-
-
-
 
 	}
 

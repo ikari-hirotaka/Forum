@@ -18,7 +18,7 @@ import beans.User;
 
 
 
-@WebFilter(urlPatterns={"/signup","/userManage","/edit","/delete"})
+@WebFilter(urlPatterns={"/signup","/userManage","/edit"})
 public class AccessFilter implements Filter {
 
 

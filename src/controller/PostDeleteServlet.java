@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.User;
 import service.PostService;
 
 @WebServlet("/postDelete")
@@ -23,29 +24,35 @@ public class PostDeleteServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		int id = 0;
 
-		try{
-
-			id=Integer.parseInt(request.getParameter("postId"));
-
-		}catch(NumberFormatException e){
-
-			List<String> messages = new ArrayList<String>();
-			messages.add("対象の投稿は存在しません。");
-			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("userManage");
-			return;
-		}
-
-		new PostService().PostDelete(id);
-
-		response.sendRedirect("home");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		HttpSession session = request.getSession();
+		int id =Integer.parseInt(request.getParameter("post_id"));
+		int user_id =Integer.parseInt(request.getParameter("post_user_id"));
+		int store =Integer.parseInt(request.getParameter("post_store"));
+
+		User user = (User) session.getAttribute("loginUser");
+
+		if(user.getDept()==2||user_id==user.getId()){
+
+			new PostService().PostDelete(id);
+
+		}else if(user.getStore()==store&&user.getDept()==3){
+
+			new PostService().PostDelete(id);
+
+		}else{
+			List<String> messages = new ArrayList<String>();
+			messages.add("エラーが発生しました。");
+			session.setAttribute("errorMessages", messages);
+			response.sendRedirect("./");
+			return;
+		}
+		new PostService().PostDelete(id);
+
+		response.sendRedirect("./");
 	}
 
 }

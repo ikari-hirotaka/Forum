@@ -30,7 +30,7 @@
 	<input name="loginID" id="loginID" value="${loginId}"/> <br /><br/>
 
 	<label for="password">Password</label><br/>
-	<input name="password" type="password" id="password" value="${password}"/> <br /><br/>
+	<input name="password" type="password" id="password"/> <br /><br/>
 
 	<input type="submit" value="ログイン" /> <br />
 

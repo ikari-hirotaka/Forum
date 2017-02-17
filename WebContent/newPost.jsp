@@ -32,7 +32,7 @@
 		<input type="text" id="category" name="category" maxlength="10" value="${ newCategory }"/><br/><br/>
 
 		<input type="submit" value="送信"/><br/><br/>
-		<a href="home">戻る</a>
+		<a href="./">戻る</a>
 
 	</form>
 

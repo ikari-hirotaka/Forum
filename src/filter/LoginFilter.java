@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 
 
-@WebFilter(urlPatterns={"/home","/newPost","/signup","/userManage","/edit","/comment"})
+@WebFilter(urlPatterns={"/*"})
 public class LoginFilter implements Filter {
 
 
@@ -28,7 +28,7 @@ public class LoginFilter implements Filter {
 
 
 		if(session.getAttribute("loginUser")==null){
-			request.getRequestDispatcher("login.jsp").forward(request, response);
+			request.getRequestDispatcher("login").forward(request, response);
 		}else{
 			chain.doFilter(request, response);
 		}

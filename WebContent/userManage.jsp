@@ -52,7 +52,7 @@ function confStart(){
 
 </c:if>
 
-	<a href="home">ホーム</a><br/><br/>
+	<a href="./">ホーム</a><br/><br/>
 	<a href="signup">ユーザー新規登録</a><br/>
 
 	<div class="users">

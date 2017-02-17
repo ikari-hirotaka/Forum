@@ -39,14 +39,13 @@ public class LoginServlet extends HttpServlet {
 		if (user != null&&user.getState()!=1) {
 
 			session.setAttribute("loginUser", user);
-			response.sendRedirect("home");
+			response.sendRedirect("./");
 		} else {
 
 			List<String> messages = new ArrayList<String>();
 			messages.add("ログインに失敗しました。");
 			session.setAttribute("errorMessages", messages);
 			request.setAttribute("loginId", loginID);
-			request.setAttribute("password", password);
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 	}
