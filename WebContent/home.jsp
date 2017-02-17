@@ -15,7 +15,7 @@
 <span>menu</span>
 
 <a href="newPost">新規投稿</a>
-<a href="userManage">ユーザー管理</a>
+<c:if test="${user.dept==1}"><a href="userManage">ユーザー管理</a></c:if>
 
 
 	<c:if test="${ not empty errorMessages }">
@@ -30,7 +30,7 @@
 	</c:if>
 
 
-<form action="home" method="Get">
+<form action="./" method="Get">
 <h4 id="target">絞込み</h4>
 カテゴリー:
 <br/>
@@ -49,6 +49,7 @@
 <input type="date" id="date2" name="date2"value="${gdate}"/>
 <br/>
 <input type="submit" value="実行"/>
+<a href="./">リセット</a>
 
 </form>
 <br/>
@@ -75,15 +76,15 @@
 <input type="hidden" id="post_store" name="post_store" value="${posts.store}"/>
 <c:choose>
 	<c:when test="${user.dept==2}">
-		<input type="submit" value="削除"/>
+		<input type="submit" value="削除" onClick="return confirm('削除してよろしいですか？')"/>
 	</c:when>
 
 	<c:when test="${posts.user_id==user.id}">
-		<input type="submit" value="削除"/>
+		<input type="submit" value="削除" onClick="return confirm('削除してよろしいですか？')"/>
 	</c:when>
 
 	<c:when test="${user.store==posts.store&&user.dept==3}">
-		<input type="submit" value="削除"/>
+		<input type="submit" value="削除" onClick="return confirm('削除してよろしいですか？')"/>
 	</c:when>
 </c:choose>
 </form>
@@ -91,7 +92,7 @@
 <p class="textname">コメント: </p>
 <c:forEach items="${com}" var="com">
 <c:if test="${com.post_id==posts.id}">
->> ${posts.title}
+
 <br/>
  ${com.text}
  <br/>

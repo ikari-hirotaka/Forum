@@ -29,6 +29,9 @@
 	<label for="pass">パスワード</label><br />
 	<input name="pass" type="password" id="pass" maxlength="255"/>（6文字以上255文字以下）<br /><br />
 
+	<label for="pass2">パスワード(再入力)</label><br/>
+	<input name="pass2" type="password" id="pass2" maxlength="255"/> <br/><br/>
+
 	<label for="name">名前</label><br />
 	<input name="name"  id="name" maxlength="10"<c:if test="${not empty newUser}">value="${newUser.name}"</c:if>/>（10文字以内）<br /><br />
 

@@ -22,8 +22,6 @@ public class UserService {
 			String encPassword = CipherUtil.encrypt(user.getPass());
 			user.setPass(encPassword);
 
-
-
 			UserDao userDao = new UserDao();
 			userDao.insert(connection, user);
 
@@ -38,8 +36,6 @@ public class UserService {
 			close(connection);
 		}
 	}
-
-
 
 	public void updateState(User us) {
 
@@ -67,7 +63,7 @@ public class UserService {
 		try {
 			connection = getConnection();
 			UserDao userDao = new UserDao();
-			User useredit=userDao.userEdit(connection, id);
+			User useredit = userDao.userEdit(connection, id);
 
 			commit(connection);
 
@@ -82,10 +78,6 @@ public class UserService {
 			close(connection);
 		}
 	}
-
-
-
-
 
 	public List<User> getUser() {
 
@@ -111,14 +103,13 @@ public class UserService {
 		}
 	}
 
-
 	public void userUpdate(User up) {
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
 
-			if(!up.getPass().isEmpty()){
+			if (!up.getPass().isEmpty()) {
 				String encPassword = CipherUtil.encrypt(up.getPass());
 				up.setPass(encPassword);
 			}
@@ -137,8 +128,6 @@ public class UserService {
 			close(connection);
 		}
 	}
-
-
 
 	public void userDelete(int id) {
 		Connection connection = null;
@@ -160,4 +149,27 @@ public class UserService {
 		}
 	}
 
+	public User ReGet(int id) {
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			UserDao userDao = new UserDao();
+
+			User user = userDao.ReGet(connection, id);
+
+			commit(connection);
+
+			return user;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+
+	}
 }

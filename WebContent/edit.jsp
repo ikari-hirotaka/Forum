@@ -43,23 +43,34 @@
 	<label for="name">名前</label><br/>
 	<input name="name"  id="name" maxlength="10" value="${userInf.name}"/>（10文字以内）<br/><br/>
 
-	<label for="store">店舗</label><br/>
-	<select name="store" id="store">
-		<option value="1"<c:if test="${userInf.store==1}">selected</c:if>>本社</option>
-		<option value="2"<c:if test="${userInf.store==2}">selected</c:if>>支店A</option>
-		<option value="3"<c:if test="${userInf.store==3}">selected</c:if>>支店B</option>
-		<option value="4"<c:if test="${userInf.store==4}">selected</c:if>>支店C</option>
-	</select>
-	<br/><br/>
+<c:choose>
+	<c:when test="${userInf.id!=loginUser.id}">
 
-	<label for="dept">役職</label><br/>
-	<select name="dept"id="dept">
-		<option value="1"<c:if test="${userInf.dept==1}">selected</c:if>>総務人事担当者</option>
-		<option value="2"<c:if test="${userInf.dept==2}">selected</c:if>>情報管理担当者</option>
-		<option value="3"<c:if test="${userInf.dept==3}">selected</c:if>>店長</option>
-		<option value="4"<c:if test="${userInf.dept==4}">selected</c:if>>社員</option>
+		<label for="store">店舗</label><br/>
+		<select name="store" id="store">
+			<option value="1"<c:if test="${userInf.store==1}">selected</c:if>>本社</option>
+			<option value="2"<c:if test="${userInf.store==2}">selected</c:if>>支店A</option>
+			<option value="3"<c:if test="${userInf.store==3}">selected</c:if>>支店B</option>
+			<option value="4"<c:if test="${userInf.store==4}">selected</c:if>>支店C</option>
+		</select>
+		<br/><br/>
 
-	</select>
+		<label for="dept">役職</label><br/>
+		<select name="dept"id="dept">
+			<option value="1"<c:if test="${userInf.dept==1}">selected</c:if>>総務人事担当者</option>
+			<option value="2"<c:if test="${userInf.dept==2}">selected</c:if>>情報管理担当者</option>
+			<option value="3"<c:if test="${userInf.dept==3}">selected</c:if>>店長</option>
+			<option value="4"<c:if test="${userInf.dept==4}">selected</c:if>>社員</option>
+
+		</select>
+
+	</c:when>
+	<c:when test="${userInf.id==loginUser.id}">
+		<input type="hidden" name="store" id="store" value="${userInf.store}"/>
+		<input type="hidden" name="dept" id="dept" value="${userInf.dept}"/>
+	</c:when>
+	</c:choose>
+
 	<br/><br/>
 
 	<input type="submit" value="登録" /> <br /><br />

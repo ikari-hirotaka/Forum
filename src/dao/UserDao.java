@@ -245,5 +245,62 @@ public class UserDao {
 
 	}
 
+	public User ReGet(Connection connection, int id) {
+		PreparedStatement ps = null;
+		try {
+			String sql = "select * from users where id = ?  ";
+			ps = connection.prepareStatement(sql);
+
+			ps.setInt(1, id);
+
+
+
+			ResultSet rs = ps.executeQuery();
+			List<User> ReGet = ReGet(rs);
+			if (ReGet.isEmpty() == true) {
+				return null;
+			} else if (2 <= ReGet.size()) {
+				throw new IllegalStateException("2 <= userList.size()");
+			} else {
+				return ReGet.get(0);
+			}
+
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+
+	}
+
+	private List<User> ReGet(ResultSet rs) throws SQLException {
+
+		List<User> ret = new ArrayList<User>();
+		try {
+			while (rs.next()) {
+				int id=rs.getInt("id");
+				String login_id = rs.getString("login_id");
+				String pass = rs.getString("password");
+				String name = rs.getString("name");
+				int store = rs.getInt("store_id");
+				int dept = rs.getInt("department_id");
+				int state = rs.getInt("state");
+
+				User user = new User();
+				user.setId(id);
+				user.setLogin_id(login_id);
+				user.setPass(pass);
+				user.setName(name);
+				user.setStore(store);
+				user.setDept(dept);
+				user.setState(state);
+
+				ret.add(user);
+			}
+			return ret;
+		} finally {
+			close(rs);
+		}
+	}
 
 }

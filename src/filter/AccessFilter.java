@@ -35,7 +35,7 @@ public class AccessFilter implements Filter {
 			List<String> messages = new ArrayList<String>();
 			messages.add("アクセス権を持っていません。");
 			session.setAttribute("errorMessages", messages);
-			request.getRequestDispatcher("home").forward(request, response);
+			request.getRequestDispatcher("./").forward(request, response);
 		}else{
 			chain.doFilter(request, response);
 		}

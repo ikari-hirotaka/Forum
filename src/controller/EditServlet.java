@@ -44,6 +44,8 @@ public class EditServlet extends HttpServlet {
 
 
 		User user = (User) session.getAttribute("loginUser");
+		int user_id=user.getId();
+		user=new UserService().ReGet(user_id);
 
 
 		User edit=new UserService().userEdit(id);
@@ -79,8 +81,14 @@ public class EditServlet extends HttpServlet {
 		up.setLogin_id(request.getParameter("loginid"));
 		up.setPass(request.getParameter("pass1"));
 		up.setName(request.getParameter("name"));
-		up.setStore(Integer.parseInt(request.getParameter("store")));
-		up.setDept(Integer.parseInt(request.getParameter("dept")));
+		if(request.getParameter("store")==null&&request.getParameter("dept")==null){
+			up.setStore(0);
+			up.setDept(0);
+		}else{
+			up.setStore(Integer.parseInt(request.getParameter("store")));
+			up.setDept(Integer.parseInt(request.getParameter("dept")));
+		}
+
 
 		if (isValid(request, messages) == true) {
 

@@ -19,6 +19,7 @@ import beans.Posts;
 import beans.User;
 import service.CommentService;
 import service.PostService;
+import service.UserService;
 
 @WebServlet(urlPatterns = { "/index.jsp" })
 public class HomeServlet extends HttpServlet {
@@ -30,6 +31,9 @@ public class HomeServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		User user = (User) session.getAttribute("loginUser");
+		int id=user.getId();
+		user=new UserService().ReGet(id);
+
 		boolean isPosts;
 		if (user != null) {
 			isPosts = true;

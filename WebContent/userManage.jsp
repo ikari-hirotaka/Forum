@@ -99,11 +99,11 @@ function confStart(){
 
 							<td align="center">
 
-								<c:if test="${users.state==0}">
+								<c:if test="${users.state==0&&users.id!=loginUser.id}">
 									<input type="submit" value="停止" onClick="return confStop()"/>
 								</c:if>
 
-								<c:if test="${users.state==1}">
+								<c:if test="${users.state==1&&users.id!=loginUser.id}">
 									<input type="submit" value="復活" onClick="return confStart()"/>
 								</c:if>
 

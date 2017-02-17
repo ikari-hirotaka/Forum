@@ -18,6 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import beans.NewPost;
 import beans.User;
 import service.PostService;
+import service.UserService;
 
 @WebServlet(urlPatterns = { "/newPost" })
 public class NewPostServlet extends HttpServlet {
@@ -26,6 +27,10 @@ public class NewPostServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ServletException {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("loginUser");
+		int id=user.getId();
+		user=new UserService().ReGet(id);
 
 		request.getRequestDispatcher("newPost.jsp").forward(request, response);
 	}
@@ -71,18 +76,18 @@ public class NewPostServlet extends HttpServlet {
 		String text = request.getParameter("text");
 		String category = request.getParameter("category");
 
-		if (StringUtils.isEmpty(title)) {
+		if (StringUtils.isBlank(title)) {
 			messages.add("件名を入力してください。");
 		}else if(title.length()>50){
 			messages.add("件名は50文字以下で入力してください。");
 		}
-		if (StringUtils.isEmpty(text)){
+		if (StringUtils.isBlank(text)){
 			messages.add("本文を入力してください。");
 		}else if(title.length()>50){
 			messages.add("本文は1000文字以下で入力してください。");
 		}
 
-		if(StringUtils.isEmpty(category)){
+		if(StringUtils.isBlank(category)){
 			messages.add("カテゴリーを入力してください。");
 		}else if(title.length()>50){
 			messages.add("カテゴリーは10文字以下で入力してください。");
