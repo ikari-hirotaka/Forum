@@ -30,6 +30,7 @@
 <form action="edit" method="post"><br/>
 
 	<input type="hidden" id="id" name="id" value="${userInf.id}">
+	<input type="hidden" id="old_login" name="old_login" value="${userInf.login_id}">
 
 	<label for="loginid">ID</label><br/>
 	<input name="loginid" id="loginid" maxlength="20" value="${userInf.login_id}"/>（半角英数6文字以上20文字以下）<br/><br/>

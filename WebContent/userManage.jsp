@@ -109,8 +109,9 @@ function confStart(){
 
 								<a href="edit?id=${users.id}">編集</a>
 
+								<c:if test="${users.id!=loginUser.id}">
 								<a href="delete?id=${users.id}" onClick="return confirm('${users.name}を削除してよろしいですか？')">削除</a>
-
+								</c:if>
 							</td>
 
 						</tr>

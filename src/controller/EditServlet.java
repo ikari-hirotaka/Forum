@@ -61,6 +61,9 @@ public class EditServlet extends HttpServlet {
 			request.setAttribute("userInf",edit);
 			request.getRequestDispatcher("edit.jsp").forward(request, response);
 
+		}else {
+
+			response.sendRedirect("./");
 		}
 
 
@@ -107,13 +110,13 @@ public class EditServlet extends HttpServlet {
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
 
 		String login_id = request.getParameter("loginid");
+		String old_login=request.getParameter("old_login");
 		String pass1 = request.getParameter("pass1");
 		String pass2 = request.getParameter("pass2");
 		String name = request.getParameter("name");
 		User check = (User) new UserService().CheckUser(login_id);
-		System.out.println("++"+check.getLogin_id());
-		System.out.println(login_id);
-		if(check!=null){
+
+		if(check!=null&&!old_login.equals(check.getLogin_id())){
 			messages.add("そのIDはすでに利用されています。");
 		} else if (StringUtils.isEmpty(login_id) || login_id.length() < 6) {
 			messages.add("6文字以上のIDを入力してください");
