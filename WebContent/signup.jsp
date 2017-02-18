@@ -7,6 +7,12 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>ユーザー登録</title>
+	<!-- Bootstrap CDN -->
+<link rel="stylesheet"
+    href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet"
+    href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<!-- Bootstrap CDN -->
 	<link href="./css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -54,10 +60,15 @@
 	</select>
 	<br /><br />
 
-	<input type="submit" value="登録" /> <br /><br />
+	<input type="submit" value="登録"  class="btn btn-primary"/> <br /><br />
 	<a href="userManage">戻る</a>
 </form>
 
 </div>
 </body>
+	<!-- Bootstrap CDN -->
+    <script
+        src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<!-- Bootstrap CDN -->
+
 </html>

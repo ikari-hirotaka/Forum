@@ -7,11 +7,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ForumTop</title>
+<!-- Bootstrap CDN -->
+<link rel="stylesheet"
+    href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet"
+    href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<!-- Bootstrap CDN -->
 	<link href="css/style.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
-こんにちは ${user.name} さん。 <a href="logout">ログアウト</a><br/>
+  <div class="col-xs-3">こんにちは ${user.name} さん。</div><div class="col-xs-2"><a href="logout">ログアウト</a></div></div><br/>
 <span>menu</span>
 
 <a href="newPost">新規投稿</a>
@@ -48,7 +54,7 @@
 ～
 <input type="date" id="date2" name="date2"value="${gdate}"/>
 <br/>
-<input type="submit" value="実行"/>
+<input type="submit" value="実行" class="btn btn-primary"/>
 <a href="./">リセット</a>
 
 </form>
@@ -76,15 +82,15 @@
 <input type="hidden" id="post_store" name="post_store" value="${posts.store}"/>
 <c:choose>
 	<c:when test="${user.dept==2}">
-		<input type="submit" value="削除" onClick="return confirm('削除してよろしいですか？')"/>
+		<input type="submit" value="削除" onClick="return confirm('削除してよろしいですか？')" class="btn btn-danger"/>
 	</c:when>
 
 	<c:when test="${posts.user_id==user.id}">
-		<input type="submit" value="削除" onClick="return confirm('削除してよろしいですか？')"/>
+		<input type="submit" value="削除" onClick="return confirm('削除してよろしいですか？')" class="btn btn-danger"/>
 	</c:when>
 
 	<c:when test="${user.store==posts.store&&user.dept==3}">
-		<input type="submit" value="削除" onClick="return confirm('削除してよろしいですか？')"/>
+		<input type="submit" value="削除" onClick="return confirm('削除してよろしいですか？')" class="btn btn-danger"/>
 	</c:when>
 </c:choose>
 </form>
@@ -112,13 +118,17 @@ ${com.insert_date}
 <input type="hidden" id="user_id" name="user_id" value="${user.id}"/>
 <textarea id="comment" name="comment" cols="30" rows="10" maxlength="500"><c:if test=" ${!comme.isEmpty()}"> ${comme}</c:if></textarea>
 <br/>
-<input type="submit" value="コメント送信"/>
+<input type="submit" value="コメント送信" class="btn btn-primary"/>
 </form>
 <br/>
 <br/>
 
 </c:forEach>
 
+	<!-- Bootstrap CDN -->
+    <script
+        src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<!-- Bootstrap CDN -->
 
 
 </body>

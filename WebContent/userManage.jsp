@@ -10,6 +10,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ユーザー管理画面</title>
+
+<!-- Bootstrap CDN -->
+<link rel="stylesheet"
+    href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet"
+    href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<!-- Bootstrap CDN -->
+
 	<link href="css/style.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 
@@ -52,11 +60,11 @@ function confStart(){
 
 </c:if>
 
-	<a href="./">ホーム</a><br/><br/>
-	<a href="signup">ユーザー新規登録</a><br/>
+	<a href="./" class="btn btn-info">ホーム</a>
+	<a href="signup" class="btn btn-info">ユーザー新規登録</a><br/><br/>
 
-	<div class="users">
-		<table border="1">
+	<div class="container">
+		<table class="table table-striped table-bordered info" >
 			<tr>
 				<td align="center">ID</td>
 				<td align="center">名前</td>
@@ -100,20 +108,19 @@ function confStart(){
 							<td align="center">
 
 								<c:if test="${users.state==0&&users.id!=loginUser.id}">
-									<input type="submit" value="停止" onClick="return confStop()"/>
+									<input type="submit" value="停止" onClick="return confStop()" class="btn btn-warning"/>
 								</c:if>
 
 								<c:if test="${users.state==1&&users.id!=loginUser.id}">
-									<input type="submit" value="復活" onClick="return confStart()"/>
+									<input type="submit" value="復活" onClick="return confStart()" class="btn btn-success"/>
 								</c:if>
 
-								<a href="edit?id=${users.id}">編集</a>
+								<a href="edit?id=${users.id}" class="btn btn-info">編集</a>
 
 								<c:if test="${users.id!=loginUser.id}">
-								<a href="delete?id=${users.id}" onClick="return confirm('${users.name}を削除してよろしいですか？')">削除</a>
+								<a href="delete?id=${users.id}" onClick="return confirm('${users.name}を削除してよろしいですか？')"  class="btn btn-danger">削除</a>
 								</c:if>
 							</td>
-
 						</tr>
 					</div>
 				</form>
@@ -123,6 +130,11 @@ function confStart(){
 	</div>
 
 	</div>
+	<!-- Bootstrap CDN -->
+    <script
+        src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<!-- Bootstrap CDN -->
+
 </body>
 
 </html>

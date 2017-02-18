@@ -71,7 +71,7 @@ public class PostDao {
 			sql.append(" and ");
 
 			if(!StringUtils.isEmpty(category)){
-				sql.append(" posts.category like ? ");
+				sql.append(" posts.category = ? ");
 				sql.append(" and ");
 			}
 
@@ -85,7 +85,7 @@ public class PostDao {
 			ps = connection.prepareStatement(sql.toString());
 
 			if(!StringUtils.isEmpty(category)){
-				ps.setString(1, "%"+category+"%");
+				ps.setString(1, category);
 				ps.setString(2, date1);
 				ps.setString(3, date2);
 			}else{
