@@ -62,6 +62,8 @@ public class SignUpServlet extends HttpServlet {
 		String id = request.getParameter("id");
 		String pass = request.getParameter("pass");
 		String name = request.getParameter("name");
+		int store = Integer.parseInt(request.getParameter("store"));
+		int dept = Integer.parseInt(request.getParameter("dept"));
 
 		if(new UserService().CheckUser(id)!=null){
 			messages.add("そのIDはすでに利用されています。");
@@ -73,7 +75,7 @@ public class SignUpServlet extends HttpServlet {
 		if (StringUtils.isEmpty(pass) ||pass.length()<6) {
 			messages.add("6文字以上のパスワードを入力してください");
 		}else if(!request.getParameter("pass2").equals(pass)){
-			messages.add("パスワードが一致しません。");
+			messages.add("入力されたパスワードが一致しません。");
 		}
 		if (StringUtils.isEmpty(name)) {
 			messages.add("名前を入力してください");
@@ -81,6 +83,13 @@ public class SignUpServlet extends HttpServlet {
 
 		if(name.length()>10){
 			messages.add("名前は10文字以下で入力してください");
+		}
+
+		if(dept==1&&store!=1){
+			messages.add("店舗と役職が不正です。");
+		}
+		if(dept==2&&store!=1){
+			messages.add("店舗と役職が不正です。");
 		}
 
 

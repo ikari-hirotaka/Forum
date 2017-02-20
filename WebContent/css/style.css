@@ -1,6 +1,4 @@
-body {
-	background-color: #8FBC8F;
-}
+
 
 .main-contents {
 	margin-top: 0px;
@@ -12,12 +10,19 @@ body {
 }
 
 .textname {
+	width: 100%;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 20px;
 	font-weight: bolder;
+	margin: 0 auto;
 }
 .textmain{
-	margin-top: 10px;
-	margin-right: 10px;
-	margin-left: 10px;
+	width: 80%;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 20px;
+    margin: 0 auto;
 }
 .errorMessages {
 	margin-top: 10px;
@@ -25,4 +30,27 @@ body {
 	margin-bottom: 10px;
 	margin-left: 10px;
 	color: red;
+}
+
+#page-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 77%;
+}
+#page-top a {
+    background: #666;
+    text-decoration: none;
+    color: #fff;
+    width: 50px;
+    padding: 30px 0;
+    text-align: center;
+    display: block;
+    border-radius: 5px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+}
+#page-top a:hover {
+    text-decoration: none;
+    background: #999;
 }

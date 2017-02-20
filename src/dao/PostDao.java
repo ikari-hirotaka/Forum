@@ -63,7 +63,7 @@ public class PostDao {
 			sql.append(" posts.text , ");
 			sql.append(" users.name , ");
 			sql.append(" posts.category , ");
-			sql.append(" posts.insert_date ");
+			sql.append(" date_format(posts.insert_date,'%Y-%m-%d %k:%i')as insert_date ");
 			sql.append(" from ");
 			sql.append(" users,posts ");
 			sql.append(" where ");

@@ -13,11 +13,33 @@
 <link rel="stylesheet"
     href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <!-- Bootstrap CDN -->
-	<link href="css/style.css" rel="stylesheet" type="text/css">
 
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	var topBtn = $('#page-top');
+	topBtn.hide();
+	$(window).scroll(function () {
+		if ($(this).scrollTop() > 100) {
+			topBtn.fadeIn();
+		} else {
+			topBtn.fadeOut();
+		}
+	});
+	//スクロールしてトップ
+    topBtn.click(function () {
+		$('body,html').animate({
+			scrollTop: 0
+		}, 500);
+		return false;
+    });
+});
+</script>
 </head>
 <body>
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
 
         <div class="navbar-header">
@@ -28,22 +50,30 @@
             <li><a href="newPost">新規投稿</a></li>
             <li><c:if test="${user.dept==1}"><a href="userManage">ユーザー管理</a></c:if></li>
 
+
         </ul>
 
-        <div class="text-right">
-            <p class="text-right">こんにちは ${user.name} さん。</p>
-            <a href="logout">ログアウト</a>
-        </div>
+		<ul class="nav navbar-nav navbar-right">
+            <li><a class="navbar-brand">こんにちは <c:out value="${user.name}" /> さん。</a></li>
+            <li><a href="logout" class="text-info">ログアウト</a></li>
 
+		</ul>
 
     </div>
 </nav>
+<br/>
+<br/>
+<br/>
+<br/>
 
+<p id="page-top"><a href="#top" >PAGE TOP</a></p>
+
+<div class="main-contents">
 	<c:if test="${ not empty errorMessages }">
 		<div class="errorMessages">
 			<ul>
 				<c:forEach items="${errorMessages}" var="message">
-					<li><c:out value="${message}" />
+					<li><code><c:out value="${message}" /></code>
 				</c:forEach>
 			</ul>
 		</div>
@@ -69,9 +99,10 @@
 ～
 <input type="date" id="date2" name="date2"value="${gdate}"/>
 <br/>
+<div class="btn-group">
 <input type="submit" value="実行" class="btn btn-primary"/>
 <a href="./"  class="btn btn-warning">リセット</a>
-
+</div>
 </form>
 <br/>
 <br/>
@@ -81,20 +112,21 @@
 
  <br/>
 
-<p class="textname">件名:</p><p class="textmain">${posts.title}</p>
+<p class="textname">件名:</p><p class="textmain"><c:out value="${posts.title}"/></p><br/>
 
-<p class="textname">本文:</p><p class="textmain">${posts.text}</p>
+<p class="textname">本文:</p><p class="textmain"><c:out value="${posts.text}"/></p><br/>
 
-<p class="textname">カテゴリー:</p><p class="textmain">${posts.category}</p>
+<p class="textname">カテゴリー:</p><p class="textmain"><c:out value="${posts.category}"/></p><br/>
 
-<p class="textname">投稿日:</p><p class="textmain">${posts.insert_date}</p>
+<p class="textname">投稿日:</p><p class="textmain"><c:out value="${posts.insert_date}"/></p><br/>
 
-<p class="textname">投稿者:</p><p class="textmain">${posts.name}</p>
+<p class="textname">投稿者:</p><p class="textmain"><c:out value="${posts.name}"/></p><br/>
 <c:if test="${comments!=null}"></c:if>
 <form action="postDelete" method="Post">
 <input type="hidden" id="post_id" name="post_id" value="${posts.id}"/>
 <input type="hidden" id="post_user_id" name="post_user_id" value="${posts.user_id}"/>
 <input type="hidden" id="post_store" name="post_store" value="${posts.store}"/>
+<br/>
 <c:choose>
 	<c:when test="${user.dept==2}">
 		<input type="submit" value="削除" onClick="return confirm('削除してよろしいですか？')" class="btn btn-danger"/>
@@ -109,7 +141,7 @@
 	</c:when>
 </c:choose>
 </form>
-
+<br/>
 <p class="textname">コメント: </p>
 <c:forEach items="${com}" var="com">
 <c:if test="${com.post_id==posts.id}">
@@ -118,11 +150,11 @@
 <input type="hidden" id="com_user_id" name="com_user_id" value="${com.user_id}"/>
 <input type="hidden" id="com_store" name="com_store" value="${com.store}"/>
 <br/>
- ${com.text}
+ <c:out value="${com.text}"/>
  <br/>
- ${com.user_name}
+<c:out value="${com.user_name}"/>
 <br/>
-${com.insert_date}
+<c:out value="${com.insert_date}"/>
 <br/>
 <c:choose>
 	<c:when test="${user.dept==2}">
@@ -145,7 +177,7 @@ ${com.insert_date}
 
 
 
->> ${posts.title}
+>> <c:out value="${posts.title}"/>
 <form action="comment" method="Post">
 <input type="hidden" id="post_id" name="post_id" value="${posts.id}"/>
 <input type="hidden" id="user_id" name="user_id" value="${user.id}"/>
@@ -163,6 +195,6 @@ ${com.insert_date}
         src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <!-- Bootstrap CDN -->
 
-
+</div>
 </body>
 </html>

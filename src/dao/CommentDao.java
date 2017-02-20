@@ -48,7 +48,7 @@ public class CommentDao {
 
 		PreparedStatement ps = null;
 		try {
-			String sql = "select comments.id , users.store_id , comments.user_id , comments.post_id , comments.text , users.name , comments.insert_date from users , comments where users.id= "
+			String sql = "select comments.id , users.store_id , comments.user_id , comments.post_id , comments.text , users.name , date_format(comments.insert_date,'%Y-%m-%d %k:%i')as insert_date from users , comments where users.id= "
 					+ "comments.user_id";
 			ps = connection.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -75,7 +75,7 @@ public class CommentDao {
 				int store=rs.getInt("users.store_id");
 				String text = rs.getString("comments.text");
 				String user_name = rs.getString("users.name");
-				String insert_date = rs.getString("comments.insert_date");
+				String insert_date = rs.getString("insert_date");
 
 				Comment com = new Comment();
 

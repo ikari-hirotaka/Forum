@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.util.List;
 
 import beans.User;
-import dao.AllUserDao;
 import dao.UserDao;
 import utils.CipherUtil;
 
@@ -85,9 +84,9 @@ public class UserService {
 		try {
 			connection = getConnection();
 
-			AllUserDao alluserDao = new AllUserDao();
+			UserDao userDao = new UserDao();
 
-			List<User> user = alluserDao.getUser(connection);
+			List<User> user = userDao.getAllUser(connection);
 
 			commit(connection);
 

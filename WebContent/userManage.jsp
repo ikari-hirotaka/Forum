@@ -19,8 +19,28 @@
 <!-- Bootstrap CDN -->
 
 	<link href="css/style.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <script type="text/javascript">
 
+$(function() {
+	var topBtn = $('#page-top');
+	topBtn.hide();
+	$(window).scroll(function () {
+		if ($(this).scrollTop() > 100) {
+			topBtn.fadeIn();
+		} else {
+			topBtn.fadeOut();
+		}
+	});
+	//スクロールしてトップ
+    topBtn.click(function () {
+		$('body,html').animate({
+			scrollTop: 0
+		}, 500);
+		return false;
+    });
+});
 <!--
 function confStop(){
 	if(confirm('ユーザーを停止しますか？')){
@@ -46,7 +66,7 @@ function confStart(){
 
 <body>
 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
 
         <div class="navbar-header">
@@ -56,20 +76,23 @@ function confStart(){
         <ul class="nav navbar-nav">
             <li><a href="./">ホーム</a></li>
             <li><a href="signup">ユーザー新規登録</a></li>
-
         </ul>
 
     </div>
 </nav>
+<br/>
+<br/>
+<br/>
+<br/>
 
-
+<p id="page-top"><a href="#top" >PAGE TOP</a></p>
 <div class="main-contents">
 
 <c:if test="${ not empty errorMessages }">
 	<div class="errorMessages">
 		<ul>
 			<c:forEach items="${errorMessages}" var="message">
-				<li><c:out value="${message}" />
+				<li><code><c:out value="${message}" /></code>
 			</c:forEach>
 		</ul>
 	</div>
@@ -123,15 +146,19 @@ function confStart(){
 
 							<td align="center">
 
-								<c:if test="${users.state==0&&users.id!=loginUser.id}">
-									<input type="submit" value="停止" onClick="return confStop()" class="btn btn-warning"/>
-								</c:if>
+
+
+								<a href="edit?id=${users.id}" class="btn btn-info">編集</a>
 
 								<c:if test="${users.state==1&&users.id!=loginUser.id}">
 									<input type="submit" value="復活" onClick="return confStart()" class="btn btn-success"/>
 								</c:if>
 
-								<a href="edit?id=${users.id}" class="btn btn-info">編集</a>
+								<c:if test="${users.state==0&&users.id!=loginUser.id}">
+									<input type="submit" value="停止" onClick="return confStop()" class="btn btn-warning"/>
+								</c:if>
+
+
 
 								<c:if test="${users.id!=loginUser.id}">
 								<a href="delete?id=${users.id}" onClick="return confirm('${users.name}を削除してよろしいですか？')"  class="btn btn-danger">削除</a>

@@ -34,7 +34,7 @@
 	<div class="errorMessages">
 		<ul>
 			<c:forEach items="${errorMessages}" var="message">
-				<li><c:out value="${message}" />
+				<li><code><c:out value="${message}" /></code>
 			</c:forEach>
 		</ul>
 	</div>

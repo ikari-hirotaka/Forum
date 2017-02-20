@@ -114,6 +114,9 @@ public class EditServlet extends HttpServlet {
 		String pass1 = request.getParameter("pass1");
 		String pass2 = request.getParameter("pass2");
 		String name = request.getParameter("name");
+		int dept = Integer.parseInt(request.getParameter("dept"));
+		int store = Integer.parseInt(request.getParameter("store"));
+
 		User check = (User) new UserService().CheckUser(login_id);
 
 		if(check!=null&&!old_login.equals(check.getLogin_id())){
@@ -126,7 +129,7 @@ public class EditServlet extends HttpServlet {
 		if (!pass1.isEmpty()&&!pass2.isEmpty()&&pass1.length() < 6) {
 			messages.add("6文字以上のパスワードを入力してください");
 		} else if (!pass1.equals(pass2)) {
-			messages.add("パスワードが一致しません");
+			messages.add("入力されたパスワードが一致しません");
 		}
 		if (StringUtils.isEmpty(name)) {
 			messages.add("名前を入力してください");
@@ -136,6 +139,12 @@ public class EditServlet extends HttpServlet {
 			messages.add("名前は10文字以下で入力してください");
 		}
 
+		if(dept==1&&store!=1){
+			messages.add("店舗と役職が不正です。");
+		}
+		if(dept==2&&store!=1){
+			messages.add("店舗と役職が不正です。");
+		}
 		if (messages.size() == 0) {
 			return true;
 		} else {
