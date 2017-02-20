@@ -16,7 +16,17 @@
 	<link href="./css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<h3>ユーザー新規登録画面</h3>
+<nav class="navbar navbar-default">
+    <div class="container">
+
+        <div class="navbar-header">
+            <a class="navbar-brand">ユーザー新規登録画面</a>
+        </div>
+
+    </div>
+</nav>
+
+<h3></h3>
 <div class="main-contents">
 <c:if test="${ not empty errorMessages }">
 	<div class="errorMessages">

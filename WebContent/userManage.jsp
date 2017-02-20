@@ -45,7 +45,24 @@ function confStart(){
 </head>
 
 <body>
-<h3>ユーザー管理画面</h3>
+
+<nav class="navbar navbar-default">
+    <div class="container">
+
+        <div class="navbar-header">
+            <a class="navbar-brand">ユーザー管理画面</a>
+        </div>
+
+        <ul class="nav navbar-nav">
+            <li><a href="./">ホーム</a></li>
+            <li><a href="signup">ユーザー新規登録</a></li>
+
+        </ul>
+
+    </div>
+</nav>
+
+
 <div class="main-contents">
 
 <c:if test="${ not empty errorMessages }">
@@ -60,8 +77,7 @@ function confStart(){
 
 </c:if>
 
-	<a href="./" class="btn btn-info">ホーム</a>
-	<a href="signup" class="btn btn-info">ユーザー新規登録</a><br/><br/>
+
 
 	<div class="container">
 		<table class="table table-striped table-bordered info" >

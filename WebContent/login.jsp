@@ -16,9 +16,17 @@
 	<link href="./css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<nav class="navbar navbar-default">
+    <div class="container">
 
+        <div class="navbar-header">
+            <a class="navbar-brand">ログイン画面</a>
+        </div>
+
+    </div>
+</nav>
 <div class="main-contents">
-<h3>ログイン画面</h3>
+
 
 <c:if test="${ not empty errorMessages }">
 	<div class="errorMessages">
@@ -44,7 +52,7 @@
 
 </div>
 
-	<!-- Bootstrap CDN -->
+<!-- Bootstrap CDN -->
     <script
         src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <!-- Bootstrap CDN -->

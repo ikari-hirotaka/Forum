@@ -8,6 +8,7 @@ public class Comment implements Serializable {
 	private int id;
 	private int post_id;
 	private int user_id;
+	private int store;
 	private String user_name;
 	private String text;
 	private String insert_date;
@@ -46,6 +47,13 @@ public class Comment implements Serializable {
 	}
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
+	}
+
+	public int getStore() {
+		return store;
+	}
+	public void setStore(int store) {
+		this.store = store;
 	}
 
 

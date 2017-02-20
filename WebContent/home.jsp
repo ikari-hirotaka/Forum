@@ -17,12 +17,27 @@
 
 </head>
 <body>
-  <div class="col-xs-3">こんにちは ${user.name} さん。</div><div class="col-xs-2"><a href="logout">ログアウト</a></div></div><br/>
-<span>menu</span>
+<nav class="navbar navbar-default">
+    <div class="container">
 
-<a href="newPost">新規投稿</a>
-<c:if test="${user.dept==1}"><a href="userManage">ユーザー管理</a></c:if>
+        <div class="navbar-header">
+            <a class="navbar-brand">ホーム画面</a>
+        </div>
 
+        <ul class="nav navbar-nav">
+            <li><a href="newPost">新規投稿</a></li>
+            <li><c:if test="${user.dept==1}"><a href="userManage">ユーザー管理</a></c:if></li>
+
+        </ul>
+
+        <div class="text-right">
+            <p class="text-right">こんにちは ${user.name} さん。</p>
+            <a href="logout">ログアウト</a>
+        </div>
+
+
+    </div>
+</nav>
 
 	<c:if test="${ not empty errorMessages }">
 		<div class="errorMessages">
@@ -55,7 +70,7 @@
 <input type="date" id="date2" name="date2"value="${gdate}"/>
 <br/>
 <input type="submit" value="実行" class="btn btn-primary"/>
-<a href="./">リセット</a>
+<a href="./"  class="btn btn-warning">リセット</a>
 
 </form>
 <br/>
@@ -98,7 +113,10 @@
 <p class="textname">コメント: </p>
 <c:forEach items="${com}" var="com">
 <c:if test="${com.post_id==posts.id}">
-
+<form action="CommentDelete" method="Post">
+<input type="hidden" id="com_id" name="com_id" value="${com.id}"/>
+<input type="hidden" id="com_user_id" name="com_user_id" value="${com.user_id}"/>
+<input type="hidden" id="com_store" name="com_store" value="${com.store}"/>
 <br/>
  ${com.text}
  <br/>
@@ -106,7 +124,22 @@
 <br/>
 ${com.insert_date}
 <br/>
+<c:choose>
+	<c:when test="${user.dept==2}">
+		<input type="submit" value="削除" onClick="return confirm('削除してよろしいですか？')" class="btn btn-danger"/>
+	</c:when>
+
+	<c:when test="${com.user_id==user.id}">
+		<input type="submit" value="削除" onClick="return confirm('削除してよろしいですか？')" class="btn btn-danger"/>
+	</c:when>
+
+	<c:when test="${user.store==com.store&&user.dept==3}">
+		<input type="submit" value="削除" onClick="return confirm('削除してよろしいですか？')" class="btn btn-danger"/>
+	</c:when>
+</c:choose>
 <br/>
+<br/>
+</form>
 </c:if>
 </c:forEach>
 
@@ -116,7 +149,7 @@ ${com.insert_date}
 <form action="comment" method="Post">
 <input type="hidden" id="post_id" name="post_id" value="${posts.id}"/>
 <input type="hidden" id="user_id" name="user_id" value="${user.id}"/>
-<textarea id="comment" name="comment" cols="30" rows="10" maxlength="500"><c:if test=" ${!comme.isEmpty()}"> ${comme}</c:if></textarea>
+<textarea id="comment" name="comment" cols="30" rows="10" maxlength="500"><c:if test=" ${!comme.isEmpty()}">${comme}</c:if></textarea>
 <br/>
 <input type="submit" value="コメント送信" class="btn btn-primary"/>
 </form>
@@ -125,7 +158,7 @@ ${com.insert_date}
 
 </c:forEach>
 
-	<!-- Bootstrap CDN -->
+<!-- Bootstrap CDN -->
     <script
         src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <!-- Bootstrap CDN -->

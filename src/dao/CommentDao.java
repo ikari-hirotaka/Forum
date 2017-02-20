@@ -48,7 +48,7 @@ public class CommentDao {
 
 		PreparedStatement ps = null;
 		try {
-			String sql = "select comments.post_id,comments.text,users.name,comments.insert_date from users,comments where users.id= "
+			String sql = "select comments.id , users.store_id , comments.user_id , comments.post_id , comments.text , users.name , comments.insert_date from users , comments where users.id= "
 					+ "comments.user_id";
 			ps = connection.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -68,15 +68,21 @@ public class CommentDao {
 		List<Comment> ret = new ArrayList<Comment>();
 		try {
 			while (rs.next()) {
-				int id=rs.getInt("comments.post_id");
+
+				int id=rs.getInt("comments.id");
+				int user_id=rs.getInt("comments.user_id");
 				int post_id = rs.getInt("comments.post_id");
+				int store=rs.getInt("users.store_id");
 				String text = rs.getString("comments.text");
 				String user_name = rs.getString("users.name");
 				String insert_date = rs.getString("comments.insert_date");
 
 				Comment com = new Comment();
+
+				com.setUser_id(user_id);
 				com.setId(id);
 				com.setPost_id(post_id);
+				com.setStore(store);
 				com.setText(text);
 				com.setUser_name(user_name);
 				com.setInsert_date(insert_date);
@@ -87,6 +93,22 @@ public class CommentDao {
 		} finally {
 			close(rs);
 		}
+	}
+
+	public void commentDelete(Connection connection, int id) {
+		PreparedStatement ps = null;
+		try{
+			String sql=" delete from comments where id=? ";
+			ps = connection.prepareStatement(sql);
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+
+
 	}
 
 }

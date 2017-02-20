@@ -15,7 +15,16 @@
 	<link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<h3>新規投稿画面</h3>
+<nav class="navbar navbar-default">
+    <div class="container">
+
+        <div class="navbar-header">
+            <a class="navbar-brand">新規投稿画面</a>
+        </div>
+
+    </div>
+</nav>
+
 	<c:if test="${ not empty errorMessages }">
 		<div class="errorMessages">
 			<ul>
