@@ -114,7 +114,7 @@ $(function() {
 
 <p class="textname">件名:</p><p class="textmain"><c:out value="${posts.title}"/></p><br/>
 
-<p class="textname">本文:</p><p class="textmain"><c:out value="${posts.text}"/></p><br/>
+<p class="textname">本文:</p><p class="textmain">${posts.text}</p><br/>
 
 <p class="textname">カテゴリー:</p><p class="textmain"><c:out value="${posts.category}"/></p><br/>
 

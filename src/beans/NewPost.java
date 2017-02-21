@@ -9,6 +9,7 @@ public class NewPost  implements Serializable {
 	private String main;
 	private int id;
 	private String category;
+
 	public String getTitle() {
 		return title;
 	}
