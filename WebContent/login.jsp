@@ -40,13 +40,28 @@
 </c:if>
 
 <form action="login" method="post">
-	<label for="logonID">loginID</label><br/>
-	<input name="loginID" id="loginID" value="${loginId}"/> <br /><br/>
+	<label for="logonID" style="margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 20px;
+	margin-right: 20px;">loginID</label><br/>
+	<input name="loginID" id="loginID" value="${loginId}" style="margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 20px;
+	margin-right: 20px;"/> <br /><br/>
 
-	<label for="password">Password</label><br/>
-	<input name="password" type="password" id="password"/> <br /><br/>
+	<label for="password" style="margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 20px;
+	margin-right: 20px;">Password</label><br/>
+	<input name="password" type="password" id="password" style="margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 20px;
+	margin-right: 20px;"/> <br /><br/>
 
-	<input type="submit" value="ログイン"  class="btn btn-primary"/> <br />
+	<input type="submit" value="ログイン"  class="btn btn-primary" style="margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 20px;
+	margin-right: 20px;"/> <br />
 
 </form>
 

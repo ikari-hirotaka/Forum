@@ -3,8 +3,6 @@ package controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,11 +44,7 @@ public class NewPostServlet extends HttpServlet {
 		NewPost np = new NewPost();
 		np.setTitle(request.getParameter("title"));
 
-		String regex = "\\r\\n";
-		Pattern p = Pattern.compile(regex);
-		Matcher m = p.matcher(request.getParameter("text"));
-
-		np.setMain(m.replaceAll("<br/>"));
+		np.setMain(request.getParameter("text"));
 		np.setCategory(request.getParameter("category"));
 
 		if (isValid(request, messages) == true) {

@@ -32,14 +32,6 @@ public class CommentServlet extends HttpServlet {
 			throws ServletException, IOException {
 		int post_id = Integer.parseInt(request.getParameter("post_id"));
 
-		String regex = "\\r\\n";
-		Pattern p = Pattern.compile(regex);
-
-		Matcher m = p.matcher(request.getParameter("comment"));
-		String comment = m.replaceAll("<br/>");
-
-
-
 		List<String> c_messages = new ArrayList<String>();
 		HttpSession session = request.getSession();
 
@@ -51,7 +43,7 @@ public class CommentServlet extends HttpServlet {
 
 			nc.setPost_id(post_id);
 			nc.setUser_id(user.getId());
-			nc.setText(comment);
+			nc.setText(request.getParameter("comment"));
 
 			new CommentService().newComment(nc);
 
@@ -59,7 +51,7 @@ public class CommentServlet extends HttpServlet {
 
 		} else {
 			session.setAttribute("errorMessages", c_messages);
-			request.setAttribute("comme", request.getParameter("comment"));
+
 			response.sendRedirect("./");
 		}
 

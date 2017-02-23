@@ -54,7 +54,7 @@ $(function() {
         </ul>
 
 		<ul class="nav navbar-nav navbar-right">
-            <li><a class="navbar-brand">こんにちは <c:out value="${user.name}" /> さん。</a></li>
+            <li><a class="navbar-brand">こんにちは ${user.name} さん。</a></li>
             <li><a href="logout" class="text-info">ログアウト</a></li>
 
 		</ul>
@@ -82,6 +82,9 @@ $(function() {
 
 
 <form action="./" method="Get">
+
+<div class="panel panel-success">
+  <div class="panel-body">
 <h4 id="target">絞込み</h4>
 カテゴリー:
 <br/>
@@ -98,29 +101,36 @@ $(function() {
 <input type="date" id="date1" name="date1" value="${sdate}"/>
 ～
 <input type="date" id="date2" name="date2"value="${gdate}"/>
-<br/>
+<br/><br/>
 <div class="btn-group">
 <input type="submit" value="実行" class="btn btn-primary"/>
 <a href="./"  class="btn btn-warning">リセット</a>
+</div>
+</div>
 </div>
 </form>
 <br/>
 <br/>
 <br/>
 
-<c:forEach items="${posts}" var="posts">
 
+
+<c:forEach items="${posts}" var="posts">
+<div class="panel panel-primary">
+  <div class="panel-body">
  <br/>
 
-<p class="textname">件名:</p><p class="textmain"><c:out value="${posts.title}"/></p><br/>
+<p class="textname">件名:</p><p class="textmain"><pre><c:out value="${posts.title}"/></pre> </p><br/>
 
-<p class="textname">本文:</p><p class="textmain">${posts.text}</p><br/>
+<p class="textname">本文:</p><p class="textmain"><pre><c:out value="${posts.text}"/></pre> </p><br/>
 
-<p class="textname">カテゴリー:</p><p class="textmain"><c:out value="${posts.category}"/></p><br/>
+<p class="textname">カテゴリー:</p><p class="textmain"><pre><c:out value="${posts.category}"/></pre></p><br/>
 
-<p class="textname">投稿日:</p><p class="textmain"><c:out value="${posts.insert_date}"/></p><br/>
+<p class="textname">投稿者:</p><p class="textmain"><pre><c:out value="${posts.name}"/></pre></p><br/>
 
-<p class="textname">投稿者:</p><p class="textmain"><c:out value="${posts.name}"/></p><br/>
+<p class="textname">投稿日:</p><p class="textmain"><pre><c:out value="${posts.insert_date}"/></pre></p><br/>
+
+
 <c:if test="${comments!=null}"></c:if>
 <form action="postDelete" method="Post">
 <input type="hidden" id="post_id" name="post_id" value="${posts.id}"/>
@@ -141,8 +151,14 @@ $(function() {
 	</c:when>
 </c:choose>
 </form>
+</div>
+</div>
+
+
 <br/>
-<p class="textname">コメント: </p>
+
+
+
 <c:forEach items="${com}" var="com">
 <c:if test="${com.post_id==posts.id}">
 <form action="CommentDelete" method="Post">
@@ -150,11 +166,11 @@ $(function() {
 <input type="hidden" id="com_user_id" name="com_user_id" value="${com.user_id}"/>
 <input type="hidden" id="com_store" name="com_store" value="${com.store}"/>
 <br/>
- <c:out value="${com.text}"/>
+<p class="textname">コメント:</p><p class="textmain"><pre><c:out value="${com.text}"/></pre></p>
  <br/>
-<c:out value="${com.user_name}"/>
+<p class="textname">投稿者:</p><p class="textmain"><pre><c:out value="${com.user_name}"/></pre></p>
 <br/>
-<c:out value="${com.insert_date}"/>
+<p class="textname">投稿日:</p><p class="textmain"><pre><c:out value="${com.insert_date}"/></pre></p>
 <br/>
 <c:choose>
 	<c:when test="${user.dept==2}">
@@ -181,7 +197,7 @@ $(function() {
 <form action="comment" method="Post">
 <input type="hidden" id="post_id" name="post_id" value="${posts.id}"/>
 <input type="hidden" id="user_id" name="user_id" value="${user.id}"/>
-<textarea id="comment" name="comment" cols="30" rows="10" maxlength="500"><c:if test=" ${!comme.isEmpty()}">${comme}</c:if></textarea>
+<textarea id="comment" name="comment" cols="30" rows="10" maxlength="500">${comme}</textarea>
 <br/>
 <input type="submit" value="コメント送信" class="btn btn-primary"/>
 </form>
