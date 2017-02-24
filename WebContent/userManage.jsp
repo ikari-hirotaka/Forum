@@ -105,7 +105,7 @@ function confStart(){
 	<div class="container">
 		<table class="table table-striped table-bordered info" >
 			<tr>
-				<td align="center">ID</td>
+				<td align="center">LoginID</td>
 				<td align="center">名前</td>
 				<td align="center">所属</td>
 				<td align="center">役職</td>
